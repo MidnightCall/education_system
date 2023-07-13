@@ -1,1 +1,17 @@
-
+server:
+  port: 8081
+spring:
+  application:
+    name: edu
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://sh-cynosdbmysql-grp-r4gyhpjo.sql.tencentcdb.com:27871/education?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Wch20030313
+  jackson:
+    default-property-inclusion: non_null # JSON?????????
+mybatis-plus:
+  type-aliases-package: com.edu.entity # ?????
+logging:
+  level:
+    com.edu: debug
