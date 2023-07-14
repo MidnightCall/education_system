@@ -26,7 +26,5 @@ public interface IEquipmentService extends IService<Equipment> {
 
     Result insert(Equipment equipment);
 
-    Result deleteById(Long id);
-
-    Result delete(List<Long> ids);
+    Result deleteById(List<Long> ids);
 }

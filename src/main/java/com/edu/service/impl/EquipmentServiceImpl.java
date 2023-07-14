@@ -6,10 +6,13 @@ import com.edu.commons.Result;
 import com.edu.entity.Equipment;
 import com.edu.mapper.EquipmentMapper;
 import com.edu.service.IEquipmentService;
+import com.edu.utils.ids.IIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName EquipmentServiceImpl
@@ -21,6 +24,10 @@ import java.util.List;
 @Slf4j
 @Service
 public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment> implements IEquipmentService {
+
+    @Resource
+    private Map<Constants.Ids, IIdGenerator> map;
+
     @Override
     public Result getById(Long id) {
         Equipment equipment = super.getById(id);
@@ -38,22 +45,26 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result update(Equipment equipment) {
-
-        return null;
+        boolean flag = super.updateById(equipment);
+        return flag ?
+                Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo()) :
+                Result.buildErrorResult(Constants.OperationMessage.UPDATE_FAIL.getInfo());
     }
 
     @Override
     public Result insert(Equipment equipment) {
-        return null;
+        equipment.setId(map.get(Constants.Ids.ShortCode).nextId());
+        boolean flag = super.save(equipment);
+        return flag ?
+                Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo(), "") :
+                Result.buildErrorResult(Constants.OperationMessage.INSERT_FAIL.getInfo());
     }
 
     @Override
-    public Result deleteById(Long id) {
-        return null;
-    }
-
-    @Override
-    public Result delete(List<Long> ids) {
-        return null;
+    public Result deleteById(List<Long> ids) {
+        boolean flag = super.removeByIds(ids);
+        return flag ?
+                Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
+                Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
     }
 }

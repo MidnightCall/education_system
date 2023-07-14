@@ -26,10 +26,7 @@ import java.util.List;
 public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laboratory> implements ILaboratoryService {
     @Override
     public Result getById(Long id) {
-        LambdaQueryWrapper<Laboratory> lambdaQueryWrapper = new LambdaQueryWrapper<Laboratory>();
-        lambdaQueryWrapper.eq(Laboratory::getLaboratoryId, id);
-        LambdaQueryWrapper<Laboratory> laboratoryList = lambdaQueryWrapper.select();
-        return Result.buildResult(Constants.ResponseCode.OK, laboratoryList);
+        return Result.buildResult(Constants.ResponseCode.OK, "");
     }
 
     @Override
