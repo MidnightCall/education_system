@@ -91,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Result logout(String token) {
         String username = UserHolder.getUser().getUsername();
         UserHolder.removeUser();
-        Boolean isSuccess = stringRedisTemplate.delete(LOGIN_USER_KEY + username);
+        Boolean isSuccess = stringRedisTemplate.delete(LOGIN_USER_KEY + token);
         if(isSuccess){
             return Result.buildResult(Constants.ResponseCode.OK, "退出登录成功！");
         }else {
