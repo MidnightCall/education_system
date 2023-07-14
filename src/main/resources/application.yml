@@ -8,10 +8,21 @@ spring:
     url: jdbc:mysql://sh-cynosdbmysql-grp-r4gyhpjo.sql.tencentcdb.com:27871/education?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
     password: Wch20030313
+  redis:
+    host: 124.220.155.208
+    port: 6379
+    password: wch20030313
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 1
+        time-between-eviction-runs: 10s
+    database: 1
   jackson:
-    default-property-inclusion: non_null # JSON?????????
+    default-property-inclusion: non_null # JSON处理时忽略非空字段
 mybatis-plus:
-  type-aliases-package: com.edu.entity # ?????
+  type-aliases-package: com.edu.entity # 别名扫描包
 logging:
   level:
     com.edu: debug
