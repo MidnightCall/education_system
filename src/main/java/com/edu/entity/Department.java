@@ -1,5 +1,9 @@
 package com.edu.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 /**
  * @ClassName Department
  * @Description
@@ -8,5 +12,13 @@ package com.edu.entity;
  * @Version
  */
 
+@Data
+@TableName("department")
 public class Department {
+    @TableId("id")
+    private Long id;
+
+    private String name;
+
+    private String address;
 }
