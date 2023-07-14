@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class EquipmentTest {
         equipment1.setDescription("呜呼呜呼真的好满足");
         equipment1.setName("瑞克5");
         equipment1.setType("电子烟");
-        equipment1.setPurchaseTime(new Date(System.currentTimeMillis()));
+        equipment1.setPurchaseTime(LocalDateTime.now().toLocalDate());
         equipment1.setPrice(996L);
         equipment1.setLabId(map.get(Constants.Ids.RandomNumeric).nextId());
         Result result1 = equipmentService.insert(equipment1);
@@ -51,7 +52,7 @@ public class EquipmentTest {
         equipment2.setDescription("从理塘到了上海，哥们收获好多money");
         equipment2.setName("芙蓉王");
         equipment2.setType("传统香烟");
-        equipment2.setPurchaseTime(new Date(System.currentTimeMillis()));
+        equipment2.setPurchaseTime(LocalDateTime.now().toLocalDate());
         equipment2.setPrice(996L);
         equipment2.setLabId(map.get(Constants.Ids.RandomNumeric).nextId());
         Result result2 = equipmentService.insert(equipment2);

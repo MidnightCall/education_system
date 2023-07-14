@@ -3,16 +3,19 @@ package com.edu.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
+import com.edu.entity.Department;
 import com.edu.entity.Equipment;
 import com.edu.entity.Student;
 import com.edu.entity.Teacher;
 import com.edu.mapper.EquipmentMapper;
 import com.edu.mapper.StudentMapper;
+import com.edu.service.IDepartmentService;
 import com.edu.service.IEquipmentService;
 import com.edu.service.IStudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,6 +28,10 @@ import java.util.List;
 @Slf4j
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
+
+    @Resource
+    private IDepartmentService departmentService;
+
     @Override
     public Result getById(Long id) {
         Student student = super.getById(id);
@@ -36,21 +43,68 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Override
     public Result getAll() {
-        return null;
+        List<Student> studentList = super.list();
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.ResponseCode.OK.getInfo(), studentList);
     }
 
     @Override
     public Result update(Student student) {
-        return null;
+        if(!judge(student)) {
+            // 是否存在不合法的非空字段
+            return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
+        }
+//        if(!departmentIsExists(student.getDepartmentId())){
+//            // 检查外键
+//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+//        }
+        boolean flag = super.updateById(student);
+        return flag ?
+                Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo()) :
+                Result.buildErrorResult(Constants.OperationMessage.UPDATE_FAIL.getInfo());
     }
 
     @Override
     public Result insert(Student student) {
-        return null;
+        if(!judge(student)) {
+            // 是否存在不合法的非空字段
+            return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
+        }
+//        if(!departmentIsExists(student.getDepartmentId())){
+//            // 检查外键
+//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+//        }
+        boolean flag = super.save(student);
+        return flag ?
+                Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo(), "") :
+                Result.buildErrorResult(Constants.OperationMessage.INSERT_FAIL.getInfo());
     }
 
     @Override
-    public Result deleteById(List<Long> id) {
-        return null;
+    public Result deleteById(List<Long> ids) {
+        boolean flag = super.removeByIds(ids);
+        return flag ?
+                Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
+                Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
     }
+
+    /**
+     * 判断给定数据是否合法
+     * @param student   学生
+     * @return
+     */
+    private boolean judge(Student student) {
+        String name = student.getName();
+        Long departmentId = student.getDepartmentId();
+        return null != name && departmentId != null;
+    }
+
+    /**
+     * 判断外键是否合法
+     * @param departmentId  部门ID
+     * @return              判断结果
+     */
+    public boolean departmentIsExists(Long departmentId) {
+        return null != departmentService.getById(departmentId);
+    }
+
 }

@@ -20,7 +20,7 @@ public class Student {
     private String name;
 
     // 性别: 0-男，1-女，默认为男
-    private String gender;
+    private Integer gender;
 
     // 手机号
     private String phone;
