@@ -8,8 +8,11 @@ import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
 import com.edu.mapper.LaboratoryMapper;
 import com.edu.service.ILaboratoryService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName ILaboratoryController
@@ -18,20 +21,21 @@ import javax.annotation.Resource;
  * @Date 2023/7/13 15:35
  * @Version
  */
-
+@Slf4j
+@Service
 public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laboratory> implements ILaboratoryService {
     @Override
     public Result getById(Long id) {
         LambdaQueryWrapper<Laboratory> lambdaQueryWrapper = new LambdaQueryWrapper<Laboratory>();
         lambdaQueryWrapper.eq(Laboratory::getLaboratoryId, id);
         LambdaQueryWrapper<Laboratory> laboratoryList = lambdaQueryWrapper.select();
-        return Result.buildResult(Constants.OK, laboratoryList);
+        return Result.buildResult(Constants.ResponseCode.OK, laboratoryList);
     }
 
     @Override
     public Result getAll() {
-        Result laboratoryList = getAll();
-        return Result.buildResult(Constants.OK, laboratoryList);
+        List<Laboratory> laboratoryList = list();
+        return Result.buildResult(Constants.ResponseCode.OK, laboratoryList);
     }
 
     @Override

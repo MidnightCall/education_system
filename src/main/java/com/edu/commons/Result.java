@@ -24,28 +24,28 @@ public class Result implements Serializable {
     // 数据集
     private Object data;
 
-    public static Result buildResult(Constants code, Object data){
+    public static Result buildResult(Constants.ResponseCode code, Object data){
         return new Result(code.getCode(), code.getInfo(), data);
     }
 
-    public static Result buildResult(Constants code, String info) {
+    public static Result buildResult(Constants.ResponseCode code, String info) {
         return new Result(code.getCode(), info);
     }
 
-    public static Result buildResult(Constants code, String info, Object data) {
+    public static Result buildResult(Constants.ResponseCode code, String info, Object data) {
         return new Result(code.getCode(), info, data);
     }
 
     public static Result buildSuccessResult(Object data) {
-        return new Result(Constants.OK.getCode(), Constants.OK.getInfo(), data);
+        return new Result(Constants.ResponseCode.OK.getCode(), Constants.ResponseCode.OK.getInfo(), data);
     }
 
     public static Result buildErrorResult() {
-        return new Result(Constants.FAIL.getCode(), Constants.FAIL.getInfo());
+        return new Result(Constants.ResponseCode.FAIL.getCode(), Constants.ResponseCode.FAIL.getInfo());
     }
 
     public static Result buildErrorResult(String info) {
-        return new Result(Constants.FAIL.getCode(), info);
+        return new Result(Constants.ResponseCode.FAIL.getCode(), info);
     }
 
     public Result(String code, String info) {

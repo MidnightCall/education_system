@@ -3,6 +3,7 @@ package com.edu.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.entity.Equipment;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @ClassName EquipmentMapper
@@ -12,5 +13,6 @@ import com.edu.entity.Equipment;
  * @Version
  */
 
+@Mapper
 public interface EquipmentMapper extends BaseMapper<Equipment> {
 }

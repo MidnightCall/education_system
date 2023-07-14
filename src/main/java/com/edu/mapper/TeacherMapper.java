@@ -1,5 +1,9 @@
 package com.edu.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.edu.entity.Teacher;
+import org.apache.ibatis.annotations.Mapper;
+
 /**
  * @ClassName TeacherMapper
  * @Description
@@ -8,5 +12,6 @@ package com.edu.mapper;
  * @Version
  */
 
-public interface TeacherMapper {
+@Mapper
+public interface TeacherMapper extends BaseMapper<Teacher> {
 }

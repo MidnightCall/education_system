@@ -1,5 +1,8 @@
 package com.edu.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.edu.entity.Teacher;
+
 /**
  * @ClassName StudentMapper
  * @Description
@@ -8,5 +11,5 @@ package com.edu.service;
  * @Version
  */
 
-public interface ITeacherService {
+public interface ITeacherService extends IService<Teacher> {
 }

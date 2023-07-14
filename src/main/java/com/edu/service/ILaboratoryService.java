@@ -1,5 +1,6 @@
 package com.edu.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
 
@@ -11,7 +12,7 @@ import com.edu.entity.Laboratory;
  * @Version
  */
 
-public interface ILaboratoryService {
+public interface ILaboratoryService extends IService<Laboratory> {
     Result getById(Long id);
 
     Result getAll();
