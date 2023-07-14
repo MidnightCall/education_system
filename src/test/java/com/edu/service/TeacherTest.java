@@ -41,7 +41,6 @@ public class TeacherTest {
     @Test
     public void testInsert() {
         Teacher teacher1 = new Teacher();
-        teacher1.setId(map.get(Constants.Ids.ShortCode).nextId());
         teacher1.setGender(0);
         teacher1.setDepartment("抽烟学院");
         teacher1.setJob("negro");
@@ -52,9 +51,8 @@ public class TeacherTest {
         logger.info("code : {} info : {}", result1.getCode(), result1.getInfo());
 
         Teacher teacher2 = new Teacher();
-        teacher2.setId(map.get(Constants.Ids.ShortCode).nextId());
         teacher2.setGender(0);
-        teacher2.setDepartment("抽烟学院");
+        teacher2.setDepartment("打脚学院");
         teacher2.setJob("rapper");
         teacher2.setName("尼古丁真");
         teacher2.setPhone("114514");

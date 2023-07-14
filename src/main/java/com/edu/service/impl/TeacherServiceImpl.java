@@ -9,10 +9,13 @@ import com.edu.mapper.EquipmentMapper;
 import com.edu.mapper.TeacherMapper;
 import com.edu.service.IEquipmentService;
 import com.edu.service.ITeacherService;
+import com.edu.utils.ids.IIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName StudentMapper
@@ -25,6 +28,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements ITeacherService {
+
+    @Resource
+    private Map<Constants.Ids, IIdGenerator> map;
 
     @Override
     public Result getById(Long id) {
@@ -51,6 +57,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     @Override
     public Result insert(Teacher teacher) {
+        teacher.setId(map.get(Constants.Ids.ShortCode).nextId());
         boolean flag = super.save(teacher);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo(), "") :
