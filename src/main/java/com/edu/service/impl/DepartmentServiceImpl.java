@@ -73,7 +73,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         if(name == null || name.isEmpty()){
             return Result.buildErrorResult(Constants.OperationMessage.INSERT_FAIL.getInfo());
         }
-        department.setId(map.get(Constants.Ids.RandomNumeric).nextId());
+        department.setId(map.get(Constants.Ids.RedisIdWorker).nextId());
         boolean flag = super.save(department);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo(), "") :

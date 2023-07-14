@@ -1,5 +1,7 @@
 package com.edu.commons;
 
+import com.edu.utils.ids.policy.RedisIdWorker;
+
 /**
  * @ClassName ReturnCode
  * @Description 常量
@@ -64,7 +66,9 @@ public class Constants {
         // 日期算法
         ShortCode,
         // 随机算法
-        RandomNumeric;
+        RandomNumeric,
+        // redis自增算法
+        RedisIdWorker;
     }
 
     // 操作结果提示语句
