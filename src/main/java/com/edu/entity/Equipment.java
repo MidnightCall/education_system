@@ -2,6 +2,8 @@ package com.edu.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @ClassName Equipment
  * @Description
@@ -11,10 +13,24 @@ import lombok.Data;
  */
 @Data
 public class Equipment {
-    // 设备ID
-    private String equipmentId;
+    // 主键ID
+    private Long id;
+
     // 设备名称
-    private String equipmentName;
+    private String name;
+
+    // 设备描述
+    private String description;
+
+    // 设备价格
+
+    private Long price;
     // 设备类型
-    private String equipmentType;
+
+    private String type;
+    // 购买时间
+    private Date purchase_time;
+
+    // 所属的实验室ID
+    private Long lab_id;
 }

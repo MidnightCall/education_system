@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +79,9 @@ public class TeacherTest {
 
     @Test
     public void testDelete() {
-        Long id = 39286048L;
+        List<Long> id = new ArrayList<>();
+        id.add(39286121L);
+        id.add(39286137L);
         Result result = teacherService.deleteById(id);
         logger.info("code : {} info : {}", result.getCode(), result.getInfo());
     }

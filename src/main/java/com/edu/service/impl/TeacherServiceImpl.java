@@ -58,8 +58,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     }
 
     @Override
-    public Result deleteById(Long id) {
-        boolean flag = super.removeById(id);
+    public Result deleteById(List<Long> ids) {
+        boolean flag = super.removeByIds(ids);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
                 Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());

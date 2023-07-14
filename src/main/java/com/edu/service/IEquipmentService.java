@@ -2,8 +2,11 @@ package com.edu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.edu.commons.Result;
 import com.edu.entity.Equipment;
 import com.edu.mapper.EquipmentMapper;
+
+import java.util.List;
 
 /**
  * @ClassName IEquipmentService
@@ -14,4 +17,16 @@ import com.edu.mapper.EquipmentMapper;
  */
 
 public interface IEquipmentService extends IService<Equipment> {
+    
+    Result getById(Long id);
+
+    Result getAll();
+
+    Result update(Equipment equipment);
+
+    Result insert(Equipment equipment);
+
+    Result deleteById(Long id);
+
+    Result delete(List<Long> ids);
 }
