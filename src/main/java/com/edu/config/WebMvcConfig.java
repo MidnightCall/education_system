@@ -33,17 +33,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         converters.add(0, mappingJackson2HttpMessageConverter);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                //是否发送Cookie
-                .allowCredentials(true)
-                //放行哪些原始域
-                .allowedOrigins("http://localhost:5173/**")
-                .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
-                .allowedHeaders("*")
-                .exposedHeaders("*");
-    }
 
 }
 
