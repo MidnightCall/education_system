@@ -1,5 +1,7 @@
 package com.edu.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -11,5 +13,12 @@ import lombok.Data;
  */
 
 @Data
+@TableName("department")
 public class Department {
+    @TableId("id")
+    private Long id;
+
+    private String name;
+
+    private String address;
 }
