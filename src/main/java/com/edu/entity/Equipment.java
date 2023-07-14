@@ -23,14 +23,14 @@ public class Equipment {
     private String description;
 
     // 设备价格
-
     private Long price;
-    // 设备类型
 
+    // 设备类型
     private String type;
+
     // 购买时间
-    private Date purchase_time;
+    private Date purchaseTime;
 
     // 所属的实验室ID
-    private Long lab_id;
+    private Long labId;
 }

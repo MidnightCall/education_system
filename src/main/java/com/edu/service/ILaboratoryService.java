@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
 
+import java.util.List;
+
 /**
  * @ClassName ILaboratoryController
  * @Description
@@ -21,5 +23,5 @@ public interface ILaboratoryService extends IService<Laboratory> {
 
     Result insert(Laboratory laboratory);
 
-    Result deleteById(Long id);
+    Result deleteById(List<Long> id);
 }

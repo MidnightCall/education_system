@@ -55,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 将用户名存储在redis
         stringRedisTemplate.opsForValue().set(Constants.LOGIN_USER_KEY + token, loginUser.getUsername());
         //设置token有效期
-        stringRedisTemplate.expire(LOGIN_USER_KEY + token, 30, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(Constants.LOGIN_USER_KEY + token, 30, TimeUnit.MINUTES);
 
         //return token
         return Result.buildSuccessResult(token);
@@ -88,10 +88,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Result logout() {
+    public Result logout(String token) {
         String username = UserHolder.getUser().getUsername();
         UserHolder.removeUser();
-        Boolean isSuccess = stringRedisTemplate.delete(LOGIN_USER_KEY + username);
+        Boolean isSuccess = stringRedisTemplate.delete(LOGIN_USER_KEY + token);
         if(isSuccess){
             return Result.buildResult(Constants.ResponseCode.OK, "退出登录成功！");
         }else {

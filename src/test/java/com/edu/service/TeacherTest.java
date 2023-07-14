@@ -42,7 +42,7 @@ public class TeacherTest {
     public void testInsert() {
         Teacher teacher1 = new Teacher();
         teacher1.setGender(0);
-        teacher1.setDepartment("抽烟学院");
+        teacher1.setDepartmentId(101L);
         teacher1.setJob("negro");
         teacher1.setName("芙蓉王源");
         teacher1.setPhone("114514");
@@ -52,7 +52,7 @@ public class TeacherTest {
 
         Teacher teacher2 = new Teacher();
         teacher2.setGender(0);
-        teacher2.setDepartment("打脚学院");
+        teacher2.setDepartmentId(101L);
         teacher2.setJob("rapper");
         teacher2.setName("尼古丁真");
         teacher2.setPhone("114514");
@@ -66,7 +66,7 @@ public class TeacherTest {
         Teacher teacher2 = new Teacher();
         teacher2.setId(39286048L);
         teacher2.setGender(0);
-        teacher2.setDepartment("打胶学院");
+        teacher2.setDepartmentId(101L);
         teacher2.setJob("rapper");
         teacher2.setName("尼古丁真");
         teacher2.setPhone("114514");

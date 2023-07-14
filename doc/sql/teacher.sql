@@ -26,13 +26,20 @@ CREATE TABLE `teacher`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `gender` int default 0 NOT NULL,
-  `department` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `department_id` long CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `job` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `phone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `salary` LONG CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
+
+
+
+
+
+
+# 废弃
 -- ----------------------------
 -- Table structure for teacher_performance
 -- ----------------------------

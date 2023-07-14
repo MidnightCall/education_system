@@ -4,6 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.edu.entity.User;
 import com.edu.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -16,12 +18,10 @@ import java.util.concurrent.TimeUnit;
 import static com.edu.commons.Constants.LOGIN_USER_KEY;
 import static com.edu.commons.Constants.LOGIN_USER_TTL;
 
+@Slf4j
 public class RefreshTokenInterceptor implements HandlerInterceptor {
 
     private StringRedisTemplate stringRedisTemplate;
-
-    @Resource
-    private IUserService userService;
 
     public RefreshTokenInterceptor(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
@@ -30,19 +30,22 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 1.获取请求头中的token
-        String token = request.getHeader("authorization");
+        String token = request.getHeader("token");
+        log.info(token);
         if (StrUtil.isBlank(token)) {
             return true;
         }
         // 2.基于TOKEN获取redis中的用户
         String key  = LOGIN_USER_KEY + token;
         String username = stringRedisTemplate.opsForValue().get(key);
+        log.info(username);
         // 3.判断用户是否存在
         if (username == null) {
             return true;
         }
         // 5.查询user
-        User user = userService.query().eq("username", username).one();
+        User user = new User();
+        user.setUsername(username);
         // 6.存在，保存用户信息到 ThreadLocal
         UserHolder.saveUser(user);
         // 7.刷新token有效期
