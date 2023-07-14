@@ -1,5 +1,12 @@
 package com.edu.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 /**
  * @ClassName User
  * @Description
@@ -8,5 +15,18 @@ package com.edu.entity;
  * @Version
  */
 
-public class User {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class User implements Serializable {
+    /**
+     * 用户名
+     */
+    @TableId(value = "username")
+    private String username;
+
+    /**
+     * 密码，加密存储
+     */
+    private String password;
 }

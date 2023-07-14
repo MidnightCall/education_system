@@ -9,10 +9,16 @@ package com.edu.commons;
  */
 
 public class Constants {
+
+    // redis登录令牌的key的前缀
+    public static final String LOGIN_USER_KEY = "login:user:";
+    //
+    public static final int LOGIN_USER_TTL = 30;
     /**
      * 响应状态码
      */
     public enum ResponseCode {
+
         /**
          * 操作成功
          **/

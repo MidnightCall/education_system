@@ -17,10 +17,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Result implements Serializable {
-    // 信息
-    private String info;
     // 状态码
     private String code;
+    // 信息
+    private String info;
     // 数据集
     private Object data;
 
