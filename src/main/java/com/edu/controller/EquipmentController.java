@@ -6,6 +6,7 @@ import com.edu.service.IEquipmentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName equipmentController
@@ -41,9 +42,9 @@ public class EquipmentController {
         return equipmentService.insert(equipment);
     }
 
-    @DeleteMapping("/{id}")
-    public Result deleteById(@PathVariable Long id) {
-        return equipmentService.deleteById(id);
+    @PostMapping("/{id}")
+    public Result deleteById(@RequestBody List<Long> ids) {
+        return equipmentService.deleteById(ids);
     }
 
 }

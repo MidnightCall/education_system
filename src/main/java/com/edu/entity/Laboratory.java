@@ -12,10 +12,5 @@ import lombok.Data;
 
 @Data
 public class Laboratory {
-    // 实验室ID
-    private String laboratoryId;
-    // 实验室名称
-    private String laboratoryName;
-    // 实验室类型
-    private String laboratoryType;
+
 }
