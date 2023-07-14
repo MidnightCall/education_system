@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,10 +41,9 @@ public class TeacherTest {
     @Test
     public void testInsert() {
         Teacher teacher1 = new Teacher();
-        teacher1.setId(map.get(Constants.Ids.ShortCode).nextId());
         teacher1.setGender(0);
         teacher1.setDepartment("抽烟学院");
-        teacher1.setJob("rapper");
+        teacher1.setJob("negro");
         teacher1.setName("芙蓉王源");
         teacher1.setPhone("114514");
         teacher1.setSalary(114514L);
@@ -50,9 +51,8 @@ public class TeacherTest {
         logger.info("code : {} info : {}", result1.getCode(), result1.getInfo());
 
         Teacher teacher2 = new Teacher();
-        teacher2.setId(map.get(Constants.Ids.ShortCode).nextId());
         teacher2.setGender(0);
-        teacher2.setDepartment("抽烟学院");
+        teacher2.setDepartment("打脚学院");
         teacher2.setJob("rapper");
         teacher2.setName("尼古丁真");
         teacher2.setPhone("114514");
@@ -75,7 +75,22 @@ public class TeacherTest {
         logger.info("code : {} info : {}", result2.getCode(), result2.getInfo());
     }
 
+    @Test
     public void testDelete() {
+        List<Long> id = new ArrayList<>();
+        id.add(39286121L);
+        id.add(39286137L);
+        Result result = teacherService.deleteById(id);
+        logger.info("code : {} info : {}", result.getCode(), result.getInfo());
+    }
 
+    @Test
+    public void testGet() {
+        Result all = teacherService.getAll();
+        for (Teacher teacher : (List<Teacher>) all.getData()) {
+            logger.info("{}", teacher);
+        }
+        Result teacher = teacherService.getById(39286121L);
+        logger.info("{}", teacher);
     }
 }

@@ -6,6 +6,7 @@ import com.edu.service.ITeacherService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName TeacherController
@@ -40,9 +41,9 @@ public class TeacherController {
         return teacherService.insert(teacher);
     }
 
-    @DeleteMapping("/{id}")
-    public Result deleteById(@PathVariable Long id) {
-        return teacherService.deleteById(id);
+    @PostMapping("/delete")
+    public Result deleteById(@RequestBody List<Long> ids) {
+        return teacherService.deleteById(ids);
     }
 }
 
