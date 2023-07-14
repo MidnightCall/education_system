@@ -51,7 +51,7 @@ public class Constants {
         }
     }
 
-    
+    // Id生成器常量
     public enum Ids {
         // 雪花算法
         SnowFlake,
@@ -59,5 +59,28 @@ public class Constants {
         ShortCode,
         // 随机算法
         RandomNumeric;
+    }
+
+    // 操作结果提示语句
+    public enum OperationMessage {
+        SELECT_SUCCESS("查询成功"),
+        UPDATE_SUCCESS("更新成功"),
+        INSERT_SUCCESS("插入成功"),
+        DELETE_SUCCESS("删除成功"),
+        SELECT_FAIL("查询失败"),
+        UPDATE_FAIL("更新失败"),
+        INSERT_FAIL("插入失败"),
+        DELETE_FAIL("删除失败"),
+        ;
+
+        private final String info;
+
+        OperationMessage(String info) {
+            this.info = info;
+        }
+
+        public String getInfo() {
+            return this.info;
+        }
     }
 }
