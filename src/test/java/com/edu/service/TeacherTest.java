@@ -44,7 +44,7 @@ public class TeacherTest {
         teacher1.setId(map.get(Constants.Ids.ShortCode).nextId());
         teacher1.setGender(0);
         teacher1.setDepartment("抽烟学院");
-        teacher1.setJob("rapper");
+        teacher1.setJob("negro");
         teacher1.setName("芙蓉王源");
         teacher1.setPhone("114514");
         teacher1.setSalary(114514L);

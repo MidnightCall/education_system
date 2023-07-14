@@ -41,8 +41,8 @@ public class TeacherController {
         return teacherService.insert(teacher);
     }
 
-    @DeleteMapping
-    public Result deleteById(List<Long> ids) {
+    @PostMapping("/delete")
+    public Result deleteById(@RequestBody List<Long> ids) {
         return teacherService.deleteById(ids);
     }
 }
