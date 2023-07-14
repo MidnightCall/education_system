@@ -1,7 +1,11 @@
 package com.edu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.edu.commons.Result;
+import com.edu.entity.Laboratory;
 import com.edu.entity.Student;
+
+import java.util.List;
 
 /**
  * @ClassName IStudentService
@@ -12,4 +16,13 @@ import com.edu.entity.Student;
  */
 
 public interface IStudentService extends IService<Student> {
+    Result getById(Long id);
+
+    Result getAll();
+
+    Result update(Student student);
+
+    Result insert(Student student);
+
+    Result deleteById(List<Long> id);
 }

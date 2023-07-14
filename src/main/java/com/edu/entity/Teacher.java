@@ -23,8 +23,8 @@ public class Teacher {
     // 性别：0-男，1-女，默认为男
     private Integer gender;
 
-    // 所属部门
-    private String department;
+    // 归属机构（学院）
+    private Long departmentId;
 
     // 职称
     private String job;

@@ -1,5 +1,7 @@
 package com.edu.entity;
 
+import lombok.Data;
+
 /**
  * @ClassName Department
  * @Description
@@ -8,5 +10,6 @@ package com.edu.entity;
  * @Version
  */
 
+@Data
 public class Department {
 }

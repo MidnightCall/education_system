@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @ClassName equipmentController
+ * @ClassName EquipmentController
  * @Description
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 14:59
