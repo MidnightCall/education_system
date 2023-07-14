@@ -38,6 +38,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         // 2.基于TOKEN获取redis中的用户
         String key  = LOGIN_USER_KEY + token;
         String username = stringRedisTemplate.opsForValue().get(key);
+        log.info(username);
         // 3.判断用户是否存在
         if (username == null) {
             return true;
