@@ -13,7 +13,7 @@ public class CORSFilter implements Filter {
  
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-  //*号表示对所有请求都允许跨域访问
+        // *号表示对所有请求都允许跨域访问
         HttpServletResponse res = (HttpServletResponse) response;
         res.addHeader("Access-Control-Allow-Credentials", "true");
         res.addHeader("Access-Control-Allow-Origin", "*");

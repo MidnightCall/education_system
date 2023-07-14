@@ -14,13 +14,11 @@ import java.io.Serializable;
  * @Version
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Result implements Serializable {
-    // 信息
-    private String info;
     // 状态码
     private String code;
+    // 信息
+    private String info;
     // 数据集
     private Object data;
 
@@ -48,8 +46,17 @@ public class Result implements Serializable {
         return new Result(Constants.ResponseCode.FAIL.getCode(), info);
     }
 
+    public Result() {
+    }
+
     public Result(String code, String info) {
         this.code = code;
         this.info = info;
+    }
+
+    public Result(String code, String info, Object data) {
+        this.info = info;
+        this.code = code;
+        this.data = data;
     }
 }

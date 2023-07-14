@@ -5,6 +5,8 @@ import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
 import com.edu.entity.Teacher;
 
+import java.util.List;
+
 /**
  * @ClassName StudentMapper
  * @Description
@@ -22,5 +24,5 @@ public interface ITeacherService extends IService<Teacher> {
 
     Result insert(Teacher teacher);
 
-    Result deleteById(Long id);
+    Result deleteById(List<Long> ids);
 }
