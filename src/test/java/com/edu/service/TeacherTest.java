@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,7 +76,20 @@ public class TeacherTest {
         logger.info("code : {} info : {}", result2.getCode(), result2.getInfo());
     }
 
+    @Test
     public void testDelete() {
+        Long id = 39286048L;
+        Result result = teacherService.deleteById(id);
+        logger.info("code : {} info : {}", result.getCode(), result.getInfo());
+    }
 
+    @Test
+    public void testGet() {
+        Result all = teacherService.getAll();
+        for (Teacher teacher : (List<Teacher>) all.getData()) {
+            logger.info("{}", teacher);
+        }
+        Result teacher = teacherService.getById(39286121L);
+        logger.info("{}", teacher);
     }
 }
