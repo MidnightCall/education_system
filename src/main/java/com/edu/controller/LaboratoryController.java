@@ -6,6 +6,7 @@ import com.edu.service.ILaboratoryService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName LaboratoryController
@@ -42,8 +43,8 @@ public class LaboratoryController {
         return laboratoryService.insert(laboratory);
     }
 
-    @DeleteMapping("/{id}")
-    public Result deleteById(@PathVariable Long id) {
-        return laboratoryService.deleteById(id);
+    @PostMapping("/delete")
+    public Result deleteById(@RequestBody List<Long> ids) {
+        return laboratoryService.deleteById(ids);
     }
 }

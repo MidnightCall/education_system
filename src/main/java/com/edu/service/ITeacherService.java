@@ -8,7 +8,7 @@ import com.edu.entity.Teacher;
 import java.util.List;
 
 /**
- * @ClassName StudentMapper
+ * @ClassName ITeacherService
  * @Description
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:24

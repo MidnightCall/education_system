@@ -12,5 +12,14 @@ import lombok.Data;
 
 @Data
 public class Laboratory {
-
+    // 主键Id
+    private Long id;
+    // 实验室名称
+    private String name;
+    // 地址
+    private String address;
+    // 学院Id
+    private Long departmentId;
+    // 老师Id
+    private Long teacherId;
 }

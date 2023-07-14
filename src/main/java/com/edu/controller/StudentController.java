@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version
  */
 @RestController
-@RequestMapping("/equipment")
+@RequestMapping("/student")
 public class StudentController {
 
 

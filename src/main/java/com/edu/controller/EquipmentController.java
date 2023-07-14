@@ -42,7 +42,7 @@ public class EquipmentController {
         return equipmentService.insert(equipment);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/delete")
     public Result deleteById(@RequestBody List<Long> ids) {
         return equipmentService.deleteById(ids);
     }

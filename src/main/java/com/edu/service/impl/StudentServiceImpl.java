@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * @ClassName StudentMapper
+ * @ClassName StudentServiceImpl
  * @Description
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:24
