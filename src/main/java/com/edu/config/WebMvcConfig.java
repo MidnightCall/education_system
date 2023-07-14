@@ -39,7 +39,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                 //是否发送Cookie
                 .allowCredentials(true)
                 //放行哪些原始域
-                .allowedOrigins("*")
+                .allowedOrigins("http://localhost:5173/**")
                 .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
                 .allowedHeaders("*")
                 .exposedHeaders("*");
