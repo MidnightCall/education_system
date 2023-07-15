@@ -5,6 +5,7 @@ import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.Equipment;
 import com.edu.mapper.EquipmentMapper;
+import com.edu.service.IDepartmentService;
 import com.edu.service.IEquipmentService;
 import com.edu.service.ILaboratoryService;
 import com.edu.utils.ids.IIdGenerator;
@@ -30,7 +31,7 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
     private Map<Constants.Ids, IIdGenerator> map;
 
     @Resource
-    private ILaboratoryService laboratoryService;
+    private IDepartmentService departmentService;
 
     @Override
     public Result getById(Long id) {
@@ -79,11 +80,11 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
     }
 
     /**
-     * 辅助方法，判断实验室ID(外键是否存在)
-     * @param labId 实验室ID
+     * 辅助方法，判断部门ID(外键是否存在)
+     * @param departmentId 部门ID
      * @return      是否存在
      */
-    private boolean labIsExists(Long labId) {
-        return null != laboratoryService.getById(labId);
+    private boolean labIsExists(Long departmentId) {
+        return null != departmentService.getById(departmentId);
     }
 }

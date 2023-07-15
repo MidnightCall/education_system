@@ -45,7 +45,7 @@ public class EquipmentTest {
         equipment1.setType("电子烟");
         equipment1.setPurchaseTime(LocalDateTime.now().toLocalDate());
         equipment1.setPrice(996L);
-        equipment1.setLabId(map.get(Constants.Ids.RandomNumeric).nextId());
+        equipment1.setDepartmentId(map.get(Constants.Ids.RandomNumeric).nextId());
         Result result1 = equipmentService.insert(equipment1);
 
         Equipment equipment2 = new Equipment();
@@ -54,7 +54,7 @@ public class EquipmentTest {
         equipment2.setType("传统香烟");
         equipment2.setPurchaseTime(LocalDateTime.now().toLocalDate());
         equipment2.setPrice(996L);
-        equipment2.setLabId(map.get(Constants.Ids.RandomNumeric).nextId());
+        equipment2.setDepartmentId(map.get(Constants.Ids.RandomNumeric).nextId());
         Result result2 = equipmentService.insert(equipment2);
 
 

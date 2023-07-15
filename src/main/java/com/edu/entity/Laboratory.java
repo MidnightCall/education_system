@@ -20,6 +20,6 @@ public class Laboratory {
     private String address;
     // 学院Id
     private Long departmentId;
-    // 老师Id
-    private Long teacherId;
+    // 管理人
+    private String manager;
 }
