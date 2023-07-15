@@ -9,14 +9,18 @@ import com.edu.entity.Student;
 import com.edu.entity.Teacher;
 import com.edu.mapper.EquipmentMapper;
 import com.edu.mapper.StudentMapper;
+import com.edu.model.EquipmentDTO;
+import com.edu.model.StudentDTO;
 import com.edu.service.IDepartmentService;
 import com.edu.service.IEquipmentService;
 import com.edu.service.IStudentService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName StudentServiceImpl
@@ -38,13 +42,33 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         if (student == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
-        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), student);
+
+        // 查询对应的部门名称
+        Department department = departmentService.getById(student.getDepartmentId());
+
+        StudentDTO studentDTO = new StudentDTO();
+        BeanUtils.copyProperties(student, studentDTO);
+        studentDTO.setDepartmentName(department.getName());
+        
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), studentDTO);
     }
 
     @Override
     public Result getAll() {
         List<Student> studentList = super.list();
-        return Result.buildResult(Constants.ResponseCode.OK, Constants.ResponseCode.OK.getInfo(), studentList);
+
+        // 封装为DTO结果集
+        List<StudentDTO> studentDTOList = studentList.stream().map((student -> {
+            // 查询部门名称
+            Department department = departmentService.getById(student.getDepartmentId());
+            // 封装DTO
+            StudentDTO studentDTO = new StudentDTO();
+            BeanUtils.copyProperties(student, studentDTO);
+            studentDTO.setDepartmentName(department.getName());
+            return studentDTO;
+        })).collect(Collectors.toList());
+        
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.ResponseCode.OK.getInfo(), studentDTOList);
     }
 
     @Override

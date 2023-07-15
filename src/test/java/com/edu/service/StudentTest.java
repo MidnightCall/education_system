@@ -48,4 +48,16 @@ public class StudentTest {
 
         log.info("code:{}, info:{}", result.getCode(), result.getInfo());
     }
+
+    @Test
+    public void testGet() {
+//        Result all = studentService.getAll();
+//        log.info("{}", all.getData());
+//        log.info("code:{} info:{}", all.getCode(), all.getInfo());
+
+
+        Result byId = studentService.getById(1679764887720054786L);
+        log.info("{}", byId.getData());
+        log.info("code:{} info:{}", byId.getCode(), byId.getInfo());
+    }
 }
