@@ -18,6 +18,13 @@ import java.util.concurrent.TimeUnit;
 import static com.edu.commons.Constants.LOGIN_USER_KEY;
 import static com.edu.commons.Constants.LOGIN_USER_TTL;
 
+/**
+ * @ClassName RefreshTokenInterceptor
+ * @Description 更新登录token的拦截器，不进行拦截
+ * @Author Lucas Wang
+ * @Date 2023/7/13 20:07
+ * @Version
+ */
 @Slf4j
 public class RefreshTokenInterceptor implements HandlerInterceptor {
 
@@ -27,6 +34,14 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
+    /**
+     * 更新token有效期，不进行拦截
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 1.获取请求头中的token
