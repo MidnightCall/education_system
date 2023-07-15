@@ -36,12 +36,12 @@ public class RedisIdWorker implements IIdGenerator {
         LocalDateTime now = LocalDateTime.now();
 
         // 2.生成序列号
-        // 2.1.获取当前日期，采用天、年、月的顺序
-        String date = now.format(DateTimeFormatter.ofPattern("ddyyyyMM"));
+        // 2.1.获取当前日期
+        String date = now.format(DateTimeFormatter.ofPattern("yyMMdd"));
         // 2.2.获得自增长的序列号
         long count = stringRedisTemplate.opsForValue().increment("icr:department:" + date);
         // 3.拼接并返回
-        return Integer.parseInt(date) << COUNT_BITS | count;
+        return Long.parseLong(date) << COUNT_BITS | count;
     }
 
 
