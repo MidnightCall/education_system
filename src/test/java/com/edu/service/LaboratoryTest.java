@@ -2,6 +2,7 @@ package com.edu.service;
 
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
+import com.edu.model.LaboratoryDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,5 +42,17 @@ public class LaboratoryTest {
         Result result2 = laboratoryService.insert(laboratory2);
 
         log.info("code:{} info:{}", result2.getCode(), result2.getInfo());
+    }
+
+    @Test
+    public void testQuery() {
+        LaboratoryDTO laboratory = new LaboratoryDTO();
+        laboratory.setDepartmentId(236252165L);
+        Result result = laboratoryService.fuzzyQuery(laboratory);
+        log.info("{}", result.getData());
+        log.info("code:{} info:{}", result.getCode(), result.getInfo());
+//        laboratory.setName();
+//        laboratory.setId();
+//        laboratory.setAddress();
     }
 }

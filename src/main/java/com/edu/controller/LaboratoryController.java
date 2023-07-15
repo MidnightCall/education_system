@@ -1,8 +1,11 @@
 package com.edu.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
+import com.edu.model.LaboratoryDTO;
 import com.edu.service.ILaboratoryService;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -47,4 +50,10 @@ public class LaboratoryController {
     public Result deleteById(@RequestBody List<Long> ids) {
         return laboratoryService.deleteById(ids);
     }
+
+    @PostMapping("/like")
+    public Result fuzzyQuery(@RequestBody LaboratoryDTO laboratory) {
+        return laboratoryService.fuzzyQuery(laboratory);
+    }
+
 }

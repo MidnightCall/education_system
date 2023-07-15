@@ -1,5 +1,6 @@
 package com.edu.model;
 
+import com.edu.entity.Teacher;
 import lombok.Data;
 
 /**
@@ -10,25 +11,7 @@ import lombok.Data;
  * @Version
  */
 @Data
-public class TeacherDTO {
-
-    // 教师ID
-    private Long id;
-
-    // 教师名称
-    private String name;
-
-    // 教室性别
-    private Integer gender;
-
-    // 教室职位
-    private String job;
-
-    // 教师电话
-    private String phone;
-
-    // 教师工资
-    private Long salary;
+public class TeacherDTO extends Teacher {
 
     // 教师所属部门名称
     private String departmentName;
