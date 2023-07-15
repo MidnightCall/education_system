@@ -57,7 +57,7 @@ public class GrowthRecordServiceImpl extends ServiceImpl<GrowthRecordMapper, Gro
     @Override
     public Result update(GrowthRecord growthRecord) {
         if(!isValid(growthRecord)){
-            return Result.buildErrorResult(Constants.OperationMessage.UPDATE_FAIL.getInfo());
+            return Result.buildErrorResult("学生id或学年不正确，或者学习情况为空！");
         }
         boolean flag = super.updateById(growthRecord);
         return flag ?
@@ -68,7 +68,7 @@ public class GrowthRecordServiceImpl extends ServiceImpl<GrowthRecordMapper, Gro
     @Override
     public Result insert(GrowthRecord growthRecord) {
         if(!isValid(growthRecord)){
-            return Result.buildErrorResult(Constants.OperationMessage.INSERT_FAIL.getInfo());
+            return Result.buildErrorResult("学生id或学年不正确，或者学习情况为空！");
         }
 
         GrowthRecord record = query().eq("stu_id", growthRecord.getStuId())

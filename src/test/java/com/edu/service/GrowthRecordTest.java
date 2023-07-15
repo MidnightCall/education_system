@@ -36,7 +36,8 @@ public class GrowthRecordTest {
         log.info("code : {} info : {}", result.getCode(), result.getInfo());
 
         //growthRecord.setStuId(1L);
-        growthRecord.setLearning("");
+        //growthRecord.setLearning("");
+        growthRecord.setYear(15);
         result = growthRecordService.insert(growthRecord);
         log.info("code : {} info : {}", result.getCode(), result.getInfo());
     }
