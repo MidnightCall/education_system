@@ -47,11 +47,13 @@ public class LaboratoryTest {
     @Test
     public void testQuery() {
         LaboratoryDTO laboratory = new LaboratoryDTO();
-        laboratory.setDepartmentId(236252165L);
+//        laboratory.setDepartmentId(236252165L);
+//        laboratory.setDepartmentName("纪委办公室");
+        laboratory.setAddress("世界");
         Result result = laboratoryService.fuzzyQuery(laboratory);
         log.info("{}", result.getData());
         log.info("code:{} info:{}", result.getCode(), result.getInfo());
-//        laboratory.setName();
+
 //        laboratory.setId();
 //        laboratory.setAddress();
     }

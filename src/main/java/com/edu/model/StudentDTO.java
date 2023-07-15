@@ -1,5 +1,6 @@
 package com.edu.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.edu.entity.Student;
 import lombok.Data;
 
@@ -11,7 +12,32 @@ import lombok.Data;
  * @Version
  */
 @Data
-public class StudentDTO extends Student {
+public class StudentDTO {
+
+    // 主键Id
+    private String id;
+
+    // 学生姓名
+    private String name;
+
+    // 性别: 0-男，1-女，默认为男
+    private Integer gender;
+
+    // 手机号
+    private String phone;
+
+    // 归属机构（学院）
+    private Long departmentId;
+
+    // 年级
+    private String grade;
+
+    // 班级
+    @TableField("class")
+    private String clazz;
+
+    // 宿舍
+    private String dormitory;
 
     // 部门名称
     private String departmentName;
