@@ -34,6 +34,6 @@ public class Equipment {
     // 购买时间
     private LocalDate purchaseTime;
 
-    // 所属的实验室ID
-    private Long labId;
+    // 所属的部门ID
+    private Long departmentId;
 }

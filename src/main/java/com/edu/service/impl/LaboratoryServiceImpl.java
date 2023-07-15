@@ -48,8 +48,7 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
     @Override
     public Result update(Laboratory laboratory) {
         Long departmentId = laboratory.getDepartmentId();
-        Long teacherId = laboratory.getTeacherId();
-        // TODO 判断是否存在对应的学院和管理老师
+        // TODO 判断是否存在对应的学院
 
         boolean flag = super.updateById(laboratory);
         return flag ?
@@ -60,8 +59,7 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
     @Override
     public Result insert(Laboratory laboratory) {
         Long departmentId = laboratory.getDepartmentId();
-        Long teacherId = laboratory.getTeacherId();
-        // TODO 判断是否存在对应的学院和管理老师
+        // TODO 判断是否存在对应的学院
 
         laboratory.setId(map.get(Constants.Ids.SnowFlake).nextId());
         boolean flag = super.save(laboratory);

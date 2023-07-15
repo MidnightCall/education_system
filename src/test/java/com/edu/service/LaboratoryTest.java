@@ -30,7 +30,7 @@ public class LaboratoryTest {
         Laboratory laboratory1 = new Laboratory();
         laboratory1.setName("理塘");
         laboratory1.setAddress("世界最高城");
-        laboratory1.setTeacherId(100001L);
+        laboratory1.setManager("尼古丁真");
         laboratory1.setDepartmentId(101L);
         Result result1 = laboratoryService.insert(laboratory1);
         log.info("code:{} info:{}", result1.getCode(), result1.getInfo());
@@ -38,7 +38,7 @@ public class LaboratoryTest {
         Laboratory laboratory2 = new Laboratory();
         laboratory2.setName("四川大学男厕所");
         laboratory2.setAddress("null");
-        laboratory2.setTeacherId(100002L);
+        laboratory2.setManager("芙蓉王源");
         laboratory2.setDepartmentId(102L);
         Result result2 = laboratoryService.insert(laboratory2);
 

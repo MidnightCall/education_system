@@ -1,5 +1,6 @@
 package com.edu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
@@ -8,8 +9,11 @@ import com.edu.entity.Equipment;
 import com.edu.entity.Teacher;
 import com.edu.mapper.DepartmentMapper;
 import com.edu.mapper.EquipmentMapper;
+import com.edu.mapper.StudentMapper;
 import com.edu.service.IDepartmentService;
 import com.edu.service.IEquipmentService;
+import com.edu.service.IStudentService;
+import com.edu.service.ITeacherService;
 import com.edu.utils.ids.IIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +35,13 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
 
     @Resource
     private Map<Constants.Ids, IIdGenerator> map;
+
+    @Resource
+    private StudentMapper studentMapper;
+    //@Resource
+    //private ITeacherService teacherService;
+    //@Resource
+    //private IEquipmentService equipmentService;
 
     @Override
     public Result queryById(Long id) {
@@ -82,9 +93,24 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
 
     @Override
     public Result deleteById(List<Long> ids) {
+        if(judge(ids)){
+            return Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
+        }
         boolean flag = super.removeByIds(ids);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
                 Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
+    }
+
+    private boolean judge(List<Long> ids) {
+        for (Long id : ids) {
+        }
+        return true;
+    }
+
+    public String getName(Long id){
+        LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        departmentLambdaQueryWrapper.eq(Department::getId, id);
+        return super.getOne(departmentLambdaQueryWrapper).getName();
     }
 }
