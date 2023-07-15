@@ -34,10 +34,13 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Override
     public Result getById(Long id) {
+        // 根据id查询学生
         Student student = super.getById(id);
+        // 若学生不存在，则返回失败结果
         if (student == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
+        // 返回查询结果
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), student);
     }
 
@@ -53,10 +56,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             // 是否存在不合法的非空字段
             return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
         }
-//        if(!departmentIsExists(student.getDepartmentId())){
-//            // 检查外键
-//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
-//        }
+        //if(!departmentIsExists(student.getDepartmentId())){
+        //    // 检查外键
+        //    return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        //}
         boolean flag = super.updateById(student);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo()) :
@@ -69,10 +72,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             // 是否存在不合法的非空字段
             return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
         }
-//        if(!departmentIsExists(student.getDepartmentId())){
-//            // 检查外键
-//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
-//        }
+        //if(!departmentIsExists(student.getDepartmentId())){
+        //    // 检查外键
+        //    return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        //}
         boolean flag = super.save(student);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo(), "") :

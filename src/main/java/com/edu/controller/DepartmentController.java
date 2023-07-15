@@ -63,7 +63,7 @@ public class DepartmentController {
 
     /**
      * 根据id列表批量删除部门
-     * @param ids
+     * @param ids 需要删除的部门的id列表
      * @return 删除结果
      */
     @PostMapping("/delete")
