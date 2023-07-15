@@ -5,10 +5,12 @@ import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.Equipment;
 import com.edu.mapper.EquipmentMapper;
+import com.edu.model.EquipmentDTO;
 import com.edu.service.IEquipmentService;
 import com.edu.service.ILaboratoryService;
 import com.edu.utils.ids.IIdGenerator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +40,8 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
         if (equipment == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
+        EquipmentDTO equipmentDTO = new EquipmentDTO();
+        BeanUtils.copyProperties(equipment, equipmentDTO);
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), equipment);
     }
 

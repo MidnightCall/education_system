@@ -8,7 +8,7 @@ import java.util.Random;
 
 /**
  * @ClassName ShortCode
- * @Description 短码生成策略，仅支持很小的调用量，用于生成活动配置类编号，保证全局唯一
+ * @Description 短码生成策略，仅支持很小的调用量，用于生成数量较少类编号，保证全局唯一
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/14 11:28
  * @Version

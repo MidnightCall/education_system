@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @ClassName RandomNumeric
- * @Description 工具类生成 org.apache.commons.lang3.RandomStringUtils
+ * @Description 工具类生成 org.apache.commons.lang3.RandomStringUtils，随机算法
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/14 11:28
  * @Version
