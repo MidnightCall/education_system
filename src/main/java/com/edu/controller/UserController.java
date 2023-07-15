@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @ClassName UserController
  * @Description
- * @Author kojikoji 1310402980@qq.com
+ * @Author Lucas Wang
  * @Date 2023/7/14 8:45
  * @Version
  */
@@ -33,11 +33,21 @@ public class UserController {
         return userService.login(loginUser);
     }
 
+    /**
+     * 注册功能
+     * @param registerUser 注册参数，包含账号、密码
+     * @return 注册结果
+     */
     @PutMapping("/register")
     public Result register(@RequestBody User registerUser){
         return userService.register(registerUser);
     }
 
+    /**
+     * 登出功能
+     * @param request HHTP请求，从中获取登录token
+     * @return 登出结果
+     */
     @GetMapping("/logout")
     public Result logout(HttpServletRequest request){
         return userService.logout(request.getHeader("token"));
