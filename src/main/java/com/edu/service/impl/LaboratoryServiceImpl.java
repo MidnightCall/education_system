@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
+import com.edu.entity.Department;
 import com.edu.entity.Laboratory;
 import com.edu.mapper.LaboratoryMapper;
+import com.edu.model.LaboratoryDTO;
+import com.edu.service.IDepartmentService;
 import com.edu.service.ILaboratoryService;
 import com.edu.utils.ids.IIdGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,9 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
 
     @Resource
     private Map<Constants.Ids, IIdGenerator> map;
+
+    @Resource
+    private IDepartmentService departmentService;
 
     @Override
     public Result getById(Long id) {
@@ -59,8 +65,6 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
     @Override
     public Result insert(Laboratory laboratory) {
         Long departmentId = laboratory.getDepartmentId();
-        // TODO 判断是否存在对应的学院
-
         laboratory.setId(map.get(Constants.Ids.SnowFlake).nextId());
         boolean flag = super.save(laboratory);
         return flag ?
@@ -74,6 +78,27 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo()) :
                 Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
+    }
+
+    @Override
+    public Result fuzzyQuery(LaboratoryDTO laboratory) {
+        // 通过部门名称联表查寻
+        if (null != laboratory.getDepartmentName()) {
+            LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            departmentLambdaQueryWrapper.eq(Department::getName, laboratory.getDepartmentName());
+            List<Department> list = departmentService.list(departmentLambdaQueryWrapper);
+            return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), list);
+        }
+
+        // 其他条件查询拼接
+        LambdaQueryWrapper<Laboratory> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(null != laboratory.getId(), Laboratory::getId, laboratory.getId());
+        lambdaQueryWrapper.eq(null != laboratory.getDepartmentId(), Laboratory::getDepartmentId, laboratory.getDepartmentId());
+
+        lambdaQueryWrapper.like(null != laboratory.getName(), Laboratory::getName, laboratory.getName());
+        lambdaQueryWrapper.like(null != laboratory.getAddress(), Laboratory::getAddress, laboratory.getAddress());
+        List<Laboratory> list = super.list(lambdaQueryWrapper);
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), list);
     }
 
 

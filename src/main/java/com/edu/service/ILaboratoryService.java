@@ -3,6 +3,7 @@ package com.edu.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
+import com.edu.model.LaboratoryDTO;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface ILaboratoryService extends IService<Laboratory> {
     Result insert(Laboratory laboratory);
 
     Result deleteById(List<Long> id);
+
+    Result fuzzyQuery(LaboratoryDTO laboratory);
 }

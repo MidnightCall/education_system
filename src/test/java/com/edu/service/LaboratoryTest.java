@@ -2,6 +2,7 @@ package com.edu.service;
 
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
+import com.edu.model.LaboratoryDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,6 @@ public class LaboratoryTest {
         Laboratory laboratory1 = new Laboratory();
         laboratory1.setName("理塘");
         laboratory1.setAddress("世界最高城");
-        laboratory1.setManager("尼古丁真");
         laboratory1.setDepartmentId(101L);
         Result result1 = laboratoryService.insert(laboratory1);
         log.info("code:{} info:{}", result1.getCode(), result1.getInfo());
@@ -38,10 +38,21 @@ public class LaboratoryTest {
         Laboratory laboratory2 = new Laboratory();
         laboratory2.setName("四川大学男厕所");
         laboratory2.setAddress("null");
-        laboratory2.setManager("芙蓉王源");
         laboratory2.setDepartmentId(102L);
         Result result2 = laboratoryService.insert(laboratory2);
 
         log.info("code:{} info:{}", result2.getCode(), result2.getInfo());
+    }
+
+    @Test
+    public void testQuery() {
+        LaboratoryDTO laboratory = new LaboratoryDTO();
+        laboratory.setDepartmentId(236252165L);
+        Result result = laboratoryService.fuzzyQuery(laboratory);
+        log.info("{}", result.getData());
+        log.info("code:{} info:{}", result.getCode(), result.getInfo());
+//        laboratory.setName();
+//        laboratory.setId();
+//        laboratory.setAddress();
     }
 }

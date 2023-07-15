@@ -15,25 +15,7 @@ import java.time.LocalDate;
  */
 
 @Data
-public class EquipmentDTO {
-    // 设备ID
-    private String Id;
-
-    // 设备名称
-    private String Name;
-
-    // 设备描述
-    private String Description;
-
-    // 设备价格
-    private Long price;
-
-    // 设备类型
-    private String type;
-
-    // 购买时间
-    private LocalDate purchaseTime;
-
+public class EquipmentDTO extends Equipment{
     // 所属部门名称
     private String departmentName;
 }

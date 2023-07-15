@@ -1,5 +1,6 @@
 package com.edu.model;
 
+import com.edu.entity.Laboratory;
 import lombok.Data;
 
 /**
@@ -10,16 +11,7 @@ import lombok.Data;
  * @Version
  */
 @Data
-public class LaboratoryDTO {
-
-    // 实验室ID
-    private Long id;
-
-    // 实验室名称
-    private String name;
-
-    // 实验室地址
-    private String address;
+public class LaboratoryDTO extends Laboratory {
 
     // 实验室名称
     private String departmentName;
