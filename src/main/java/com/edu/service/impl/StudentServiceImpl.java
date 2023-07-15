@@ -1,15 +1,14 @@
 package com.edu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
-import com.edu.entity.Department;
-import com.edu.entity.Equipment;
-import com.edu.entity.Student;
-import com.edu.entity.Teacher;
+import com.edu.entity.*;
 import com.edu.mapper.EquipmentMapper;
 import com.edu.mapper.StudentMapper;
 import com.edu.model.EquipmentDTO;
+import com.edu.model.LaboratoryDTO;
 import com.edu.model.StudentDTO;
 import com.edu.service.IDepartmentService;
 import com.edu.service.IEquipmentService;
@@ -19,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,10 +77,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             // 是否存在不合法的非空字段
             return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
         }
-//        if(!departmentIsExists(student.getDepartmentId())){
-//            // 检查外键
-//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
-//        }
+        if(!departmentIsExists(student.getDepartmentId())){
+            // 检查外键
+            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        }
         boolean flag = super.updateById(student);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo()) :
@@ -93,10 +93,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             // 是否存在不合法的非空字段
             return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
         }
-//        if(!departmentIsExists(student.getDepartmentId())){
-//            // 检查外键
-//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
-//        }
+        if(!departmentIsExists(student.getDepartmentId())){
+            // 检查外键
+            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        }
         boolean flag = super.save(student);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo(), "") :
@@ -111,10 +111,70 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
                 Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
     }
 
+    @Override
+    public Result fuzzyQuery(StudentDTO student) {
+        // 通过部门名称联表查寻
+        if (null != student.getDepartmentName()) {
+            // 查询对应的部门ID列表
+            LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            departmentLambdaQueryWrapper.like(Department::getName, student.getDepartmentName());
+            Department department = departmentService.getOne(departmentLambdaQueryWrapper);
+            if (null == department) {
+                // 字段不存在，直接返回
+                return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
+            }
+            // 查询对应的实验室字段
+            LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            studentLambdaQueryWrapper.eq(Student::getDepartmentId, department.getId());
+            List<Student> studentList = super.list(studentLambdaQueryWrapper);
+
+            // 封装为DTO对象结果集
+            List<StudentDTO> studentDTOList = studentList.stream().map(equip -> {
+                StudentDTO studentDTO = new StudentDTO();
+                BeanUtils.copyProperties(equip, studentDTO);
+                studentDTO.setDepartmentName(student.getDepartmentName());
+                return studentDTO;
+            }).collect(Collectors.toList());
+
+            return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), studentDTOList);
+        }
+
+        // 其他条件查询拼接
+        LambdaQueryWrapper<Student> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(null != student.getId(), Student::getId, student.getId());
+        lambdaQueryWrapper.eq(null != student.getDepartmentId(), Student::getDepartmentId, student.getDepartmentId());
+        lambdaQueryWrapper.eq(null != student.getGender(), Student::getGender, student.getGender());
+
+        lambdaQueryWrapper.like(null != student.getName(), Student::getName, student.getName());
+        lambdaQueryWrapper.like(null != student.getPhone(), Student::getPhone, student.getPhone());
+        lambdaQueryWrapper.like(null != student.getGrade(), Student::getGrade, student.getGrade());
+        lambdaQueryWrapper.like(null != student.getClazz(), Student::getClazz, student.getClazz());
+        lambdaQueryWrapper.like(null != student.getDormitory(), Student::getDormitory, student.getDormitory());
+
+        List<Student> studentList = super.list(lambdaQueryWrapper);
+
+        // 封装为DTO结果集
+        List<StudentDTO> studentDTOList = studentList.stream().map((lab) -> {
+            // 查询部门名称
+            LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            departmentLambdaQueryWrapper.eq(Department::getId, lab.getDepartmentId());
+            Department department = departmentService.getOne(departmentLambdaQueryWrapper);
+
+            // 封装DTO信息
+            StudentDTO studentDTO = new StudentDTO();
+            BeanUtils.copyProperties(lab, studentDTO);
+            studentDTO.setDepartmentName(department.getName());
+
+            return studentDTO;
+        }).collect(Collectors.toList());
+
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), studentDTOList);
+    }
+
     /**
      * 判断给定数据是否合法
      * @param student   学生
-     * @return
+     * @return          结果
      */
     private boolean judge(Student student) {
         String name = student.getName();

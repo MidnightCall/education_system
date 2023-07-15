@@ -2,6 +2,8 @@ package com.edu.controller;
 
 import com.edu.commons.Result;
 import com.edu.entity.Equipment;
+import com.edu.model.EquipmentDTO;
+import com.edu.model.LaboratoryDTO;
 import com.edu.service.IEquipmentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,4 +49,8 @@ public class EquipmentController {
         return equipmentService.deleteById(ids);
     }
 
+    @PostMapping("/like")
+    public Result fuzzyQuery(@RequestBody EquipmentDTO equipment) {
+        return equipmentService.fuzzyQuery(equipment);
+    }
 }

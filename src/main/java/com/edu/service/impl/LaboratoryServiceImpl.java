@@ -81,8 +81,9 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
 
     @Override
     public Result update(Laboratory laboratory) {
-        Long departmentId = laboratory.getDepartmentId();
-        // TODO 判断是否存在对应的学院
+        if(!departmentIsExists(laboratory.getDepartmentId())){
+            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        }
 
         boolean flag = super.updateById(laboratory);
         return flag ?
@@ -92,7 +93,9 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
 
     @Override
     public Result insert(Laboratory laboratory) {
-        Long departmentId = laboratory.getDepartmentId();
+        if(!departmentIsExists(laboratory.getDepartmentId())){
+            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        }
         laboratory.setId(map.get(Constants.Ids.SnowFlake).nextId());
         boolean flag = super.save(laboratory);
         return flag ?
@@ -115,11 +118,13 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
             // 查询对应的部门ID列表
             LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
             departmentLambdaQueryWrapper.like(Department::getName, laboratory.getDepartmentName());
-            Department department = departmentService.getOne(departmentLambdaQueryWrapper);
-            if (null == department) {
+            List<Department> list = departmentService.list(departmentLambdaQueryWrapper);
+            if (0 == list.size()) {
                 // 字段不存在，直接返回
                 return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
             }
+
+            // TODO 根据列表处理
             // 查询对应的实验室字段
             LambdaQueryWrapper<Laboratory> laboratoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
             laboratoryLambdaQueryWrapper.eq(Laboratory::getDepartmentId, department.getId());
@@ -166,5 +171,12 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), laboratoryDTOList);
     }
 
-
+    /**
+     * 判断外键是否合法
+     * @param departmentId  部门ID
+     * @return              判断结果
+     */
+    public boolean departmentIsExists(Long departmentId) {
+        return null != departmentService.getById(departmentId);
+    }
 }

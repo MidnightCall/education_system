@@ -82,7 +82,7 @@ public class Constants {
         INSERT_FAIL("插入失败"),
         DELETE_FAIL("删除失败"),
         NULL_ERROR("指定字段不能为空"),
-        DEPART_NOT_EXIST("不存在的实验室");
+        DEPART_NOT_EXIST("不存在的学院");
 
         private final String info;
 
