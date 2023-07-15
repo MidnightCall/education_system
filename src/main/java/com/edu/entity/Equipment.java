@@ -2,6 +2,9 @@ package com.edu.entity;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -29,7 +32,7 @@ public class Equipment {
     private String type;
 
     // 购买时间
-    private Date purchaseTime;
+    private LocalDate purchaseTime;
 
     // 所属的实验室ID
     private Long labId;

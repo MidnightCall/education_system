@@ -7,6 +7,7 @@ import com.edu.entity.Equipment;
 import com.edu.entity.Teacher;
 import com.edu.mapper.EquipmentMapper;
 import com.edu.mapper.TeacherMapper;
+import com.edu.service.IDepartmentService;
 import com.edu.service.IEquipmentService;
 import com.edu.service.ITeacherService;
 import com.edu.utils.ids.IIdGenerator;
@@ -32,6 +33,9 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     @Resource
     private Map<Constants.Ids, IIdGenerator> map;
 
+    @Resource
+    private IDepartmentService departmentService;
+
     @Override
     public Result getById(Long id) {
         Teacher teacher = super.getById(id);
@@ -49,6 +53,14 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     @Override
     public Result update(Teacher teacher) {
+        if(!judge(teacher)){
+            // 是否存在非空字段
+            return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
+        }
+//        if(!departmentIsExists(teacher.getDepartmentId())) {
+//            // 外键是否合法
+//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+//        }
         boolean flag = super.updateById(teacher);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo(), "") :
@@ -57,6 +69,14 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     @Override
     public Result insert(Teacher teacher) {
+        if(!judge(teacher)) {
+            // 是否存在非空字段
+            return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
+        }
+//        if(!departmentIsExists(teacher.getDepartmentId())) {
+//            // 外键是否合法
+//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+//        }
         teacher.setId(map.get(Constants.Ids.ShortCode).nextId());
         boolean flag = super.save(teacher);
         return flag ?
@@ -70,5 +90,24 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
                 Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
+    }
+
+    /**
+     * 判断给定数据是否合法
+     * @return 判断结果
+     */
+    private boolean judge(Teacher teacher){
+        String name = teacher.getName();
+        Long departmentId = teacher.getDepartmentId();
+        return null != name && null != departmentId;
+    }
+
+    /**
+     * 查询外键是否存在
+     * @param departmentId  部门ID
+     * @return              是否存在
+     */
+    public boolean departmentIsExists(Long departmentId) {
+        return null != departmentService.getById(departmentId);
     }
 }

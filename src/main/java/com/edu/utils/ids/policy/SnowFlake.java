@@ -1,6 +1,7 @@
 package com.edu.utils.ids.policy;
 
 import cn.hutool.core.lang.Snowflake;
+import cn.hutool.core.lang.UUID;
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.IdUtil;
 import com.edu.utils.ids.IIdGenerator;

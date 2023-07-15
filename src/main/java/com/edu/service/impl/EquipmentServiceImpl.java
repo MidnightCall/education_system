@@ -49,9 +49,9 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result update(Equipment equipment) {
-        if(!labIsExists(equipment.getLabId())){
-            return Result.buildErrorResult("设备所属的实验室不存在");
-        }
+//        if(!labIsExists(equipment.getLabId())){
+//            return Result.buildErrorResult("设备所属的实验室不存在");
+//        }
         boolean flag = super.updateById(equipment);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo()) :
@@ -60,9 +60,9 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result insert(Equipment equipment) {
-        if(!labIsExists(equipment.getLabId())){
-            return Result.buildErrorResult("设备所属的实验室不存在");
-        }
+//        if(!labIsExists(equipment.getLabId())){
+//            return Result.buildErrorResult("设备所属的实验室不存在");
+//        }
         equipment.setId(map.get(Constants.Ids.ShortCode).nextId());
         boolean flag = super.save(equipment);
         return flag ?
@@ -84,6 +84,6 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
      * @return      是否存在
      */
     private boolean labIsExists(Long labId) {
-        return null == laboratoryService.getById(labId);
+        return null != laboratoryService.getById(labId);
     }
 }

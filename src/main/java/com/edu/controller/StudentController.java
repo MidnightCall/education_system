@@ -5,7 +5,6 @@ import com.edu.entity.Student;
 import com.edu.entity.Teacher;
 import com.edu.service.IStudentService;
 import com.edu.service.ITeacherService;
-import com.sun.xml.internal.ws.addressing.WsaServerTube;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
