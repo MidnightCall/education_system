@@ -15,10 +15,14 @@ import lombok.Data;
 @Data
 @TableName("department")
 public class Department {
+
+    // 主键ID
     @TableId("id")
     private Long id;
 
+    // 部门名称
     private String name;
 
+    // 部门地址
     private String address;
 }

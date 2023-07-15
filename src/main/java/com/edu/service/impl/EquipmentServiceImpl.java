@@ -5,11 +5,13 @@ import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.Equipment;
 import com.edu.mapper.EquipmentMapper;
+import com.edu.model.EquipmentDTO;
 import com.edu.service.IDepartmentService;
 import com.edu.service.IEquipmentService;
 import com.edu.service.ILaboratoryService;
 import com.edu.utils.ids.IIdGenerator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,6 +41,7 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
         if (equipment == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
+
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), equipment);
     }
 
@@ -80,11 +83,11 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
     }
 
     /**
-     * 辅助方法，判断部门ID(外键是否存在)
-     * @param departmentId 部门ID
+     * 辅助方法，判断实验室ID(外键是否存在)
+     * @param labId 实验室ID
      * @return      是否存在
      */
-    private boolean labIsExists(Long departmentId) {
-        return null != departmentService.getById(departmentId);
+    private boolean labIsExists(Long labId) {
+        return null != departmentService.getById(labId);
     }
 }
