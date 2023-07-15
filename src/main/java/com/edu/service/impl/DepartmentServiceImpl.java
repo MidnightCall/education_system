@@ -1,5 +1,6 @@
 package com.edu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
@@ -107,5 +108,9 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         return true;
     }
 
-
+    public String getName(Long id){
+        LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        departmentLambdaQueryWrapper.eq(Department::getId, id);
+        return super.getOne(departmentLambdaQueryWrapper).getName();
+    }
 }
