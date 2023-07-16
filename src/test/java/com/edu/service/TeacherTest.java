@@ -88,18 +88,20 @@ public class TeacherTest {
     @Test
     public void testGet() {
         Result all = teacherService.getAll();
-        for (Teacher teacher : (List<Teacher>) all.getData()) {
-            logger.info("{}", teacher);
-        }
-        Result teacher = teacherService.getById(39286121L);
-        logger.info("{}", teacher);
+        logger.info("{}", all.getData());
+
+
+
+//        Result teacher = teacherService.getById(39286121L);
+//        logger.info("{}", teacher);
     }
 
     @Test
     public void testFuzzyQuery() {
         TeacherDTO teacherDTO = new TeacherDTO();
 //        teacherDTO.setDepartmentName("办公");
-        teacherDTO.setName("尼古");
+//        teacherDTO.setName("尼古");
+        teacherDTO.setSalary(16000L);
         Result result = teacherService.fuzzyQuery(teacherDTO);
         logger.info("{}", result.getData());
         logger.info("code:{} info:{}", result.getCode(), result.getInfo());
