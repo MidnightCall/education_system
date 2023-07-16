@@ -9,6 +9,7 @@ import com.edu.entity.Department;
 import com.edu.entity.Laboratory;
 import com.edu.mapper.DepartmentMapper;
 import com.edu.mapper.LaboratoryMapper;
+import com.edu.model.EquipmentDTO;
 import com.edu.model.LaboratoryDTO;
 import com.edu.service.IDepartmentService;
 import com.edu.service.ILaboratoryService;
@@ -49,13 +50,33 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
         if (laboratory == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
-        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), laboratory);
+
+        // 封装为DTO
+        Department department = departmentService.getById(laboratory.getDepartmentId());
+
+        LaboratoryDTO laboratoryDTO = new LaboratoryDTO();
+        BeanUtils.copyProperties(laboratory, laboratory);
+        laboratoryDTO.setDepartmentName(department.getName());
+
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), laboratoryDTO);
     }
 
     @Override
     public Result getAll() {
         List<Laboratory> laboratoryList = list();
-        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), laboratoryList);
+
+        // 封装为DTO对象
+        List<LaboratoryDTO> laboratoryDTOList = laboratoryList.stream().map((laboratory -> {
+            // 查询部门名称
+            Department department = departmentService.getById(laboratory.getDepartmentId());
+            // 封装DTO
+            LaboratoryDTO laboratoryDTO = new LaboratoryDTO();
+            BeanUtils.copyProperties(laboratory, laboratoryDTO);
+            laboratoryDTO.setDepartmentName(department.getName());
+            return laboratoryDTO;
+        })).collect(Collectors.toList());
+
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), laboratoryDTOList);
     }
 
     @Override

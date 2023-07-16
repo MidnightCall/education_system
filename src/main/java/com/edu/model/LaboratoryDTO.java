@@ -3,6 +3,8 @@ package com.edu.model;
 import com.edu.entity.Laboratory;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @ClassName LaboratoryDTO
  * @Description
@@ -11,7 +13,7 @@ import lombok.Data;
  * @Version
  */
 @Data
-public class LaboratoryDTO {
+public class LaboratoryDTO implements Serializable {
     // 主键Id
     private Long id;
     // 实验室名称

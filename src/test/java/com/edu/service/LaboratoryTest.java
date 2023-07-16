@@ -49,7 +49,8 @@ public class LaboratoryTest {
         LaboratoryDTO laboratory = new LaboratoryDTO();
 //        laboratory.setDepartmentId(236252165L);
 //        laboratory.setDepartmentName("纪委办公室");
-        laboratory.setAddress("世界");
+//        laboratory.setAddress("世界");
+        laboratory.setName("男厕所");
         Result result = laboratoryService.fuzzyQuery(laboratory);
         log.info("{}", result.getData());
         log.info("code:{} info:{}", result.getCode(), result.getInfo());

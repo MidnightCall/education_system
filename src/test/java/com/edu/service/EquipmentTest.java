@@ -60,4 +60,11 @@ public class EquipmentTest {
 
         logger.info("code:{} info:{}", result1.getCode(), result1.getInfo());
     }
+
+    @Test
+    public void testGet() {
+        Result all = equipmentService.getAll();
+        logger.info("{}", all.getData());
+        logger.info("code:{} info:{}", all.getCode(), all.getInfo());
+    }
 }
