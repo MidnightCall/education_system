@@ -118,27 +118,26 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
             // 查询对应的部门ID列表
             LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
             departmentLambdaQueryWrapper.like(Department::getName, laboratory.getDepartmentName());
-            List<Department> list = departmentService.list(departmentLambdaQueryWrapper);
-            if (0 == list.size()) {
+            List<Department> departmentList = departmentService.list(departmentLambdaQueryWrapper);
+            if (0 == departmentList.size()) {
                 // 字段不存在，直接返回
                 return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
             }
 
-            // TODO 根据列表处理
             // 查询对应的实验室字段
-            LambdaQueryWrapper<Laboratory> laboratoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            laboratoryLambdaQueryWrapper.eq(Laboratory::getDepartmentId, department.getId());
-            List<Laboratory> laboratoryList = super.list(laboratoryLambdaQueryWrapper);
-
-            // 封装为DTO对象结果集
             List<LaboratoryDTO> laboratoryDTOList = new LinkedList<>();
-            for(Laboratory lab : laboratoryList) {
-                // 封装DTO对象
-                LaboratoryDTO laboratoryDTO = new LaboratoryDTO();
-                BeanUtils.copyProperties(lab, laboratoryDTO);
-                laboratoryDTO.setDepartmentName(laboratory.getDepartmentName());
-                // 添加列表
-                laboratoryDTOList.add(laboratoryDTO);
+            for(Department department : departmentList) {
+                LambdaQueryWrapper<Laboratory> laboratoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                laboratoryLambdaQueryWrapper.eq(Laboratory::getDepartmentId, department.getId());
+                List<Laboratory> laboratoryList = super.list(laboratoryLambdaQueryWrapper);
+                // 封装为DTO对象
+                List<LaboratoryDTO> tempDtoList = laboratoryList.stream().map(lab -> {
+                    LaboratoryDTO laboratoryDTO = new LaboratoryDTO();
+                    BeanUtils.copyProperties(lab, laboratoryDTO);
+                    laboratoryDTO.setDepartmentName(department.getName());
+                    return laboratoryDTO;
+                }).collect(Collectors.toList());
+                laboratoryDTOList.addAll(tempDtoList);
             }
 
             return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), laboratoryDTOList);
