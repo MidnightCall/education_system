@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.edu.commons.Constants.LOGIN_USER_KEY;
+import static com.edu.commons.Constants.LOGIN_USER_TTL;
 import static com.edu.commons.Constants.ResponseCode.USERNAME_OR_PASSWORD_ERROR;
 
 /**
@@ -60,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 将用户名存储在redis
         stringRedisTemplate.opsForValue().set(Constants.LOGIN_USER_KEY + token, loginUser.getUsername());
         // 设置token有效期
-        stringRedisTemplate.expire(Constants.LOGIN_USER_KEY + token, 30, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(Constants.LOGIN_USER_KEY + token, LOGIN_USER_TTL, TimeUnit.MINUTES);
 
         //return token
         return Result.buildSuccessResult(token);
