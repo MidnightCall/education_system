@@ -116,23 +116,27 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
             // 查询对应的部门ID列表
             LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
             departmentLambdaQueryWrapper.like(Department::getName, equipment.getDepartmentName());
-            Department department = departmentService.getOne(departmentLambdaQueryWrapper);
-            if (null == department) {
+            List<Department> departmentList = departmentService.list(departmentLambdaQueryWrapper);
+            if (0 == departmentList.size()) {
                 // 字段不存在，直接返回
                 return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
             }
-            // 查询对应的实验室字段
-            LambdaQueryWrapper<Equipment> equipmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            equipmentLambdaQueryWrapper.eq(Equipment::getDepartmentId, department.getId());
-            List<Equipment> equipmentList = super.list(equipmentLambdaQueryWrapper);
 
-            // 封装为DTO对象结果集
-            List<EquipmentDTO> equipmentDTOList = equipmentList.stream().map(equip -> {
-                EquipmentDTO equipmentDTO = new EquipmentDTO();
-                BeanUtils.copyProperties(equip, equipmentDTO);
-                equipmentDTO.setDepartmentName(equipment.getDepartmentName());
-                return equipmentDTO;
-            }).collect(Collectors.toList());
+            // 查询对应的实验室字段
+            List<EquipmentDTO> equipmentDTOList = new LinkedList<>();
+            for(Department department : departmentList) {
+                LambdaQueryWrapper<Equipment> equipmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                equipmentLambdaQueryWrapper.eq(Equipment::getDepartmentId, department.getId());
+                List<Equipment> equipmentList = super.list(equipmentLambdaQueryWrapper);
+                // 封装为DTO对象
+                List<EquipmentDTO> tempDtoList = equipmentList.stream().map(lab -> {
+                    EquipmentDTO equipmentDTO = new EquipmentDTO();
+                    BeanUtils.copyProperties(lab, equipmentDTO);
+                    equipmentDTO.setDepartmentName(department.getName());
+                    return equipmentDTO;
+                }).collect(Collectors.toList());
+                equipmentDTOList.addAll(tempDtoList);
+            }
 
             return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), equipmentDTOList);
         }
@@ -144,9 +148,9 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
         lambdaQueryWrapper.eq(null != equipment.getPrice(), Equipment::getPrice, equipment.getPrice());
 
         lambdaQueryWrapper.like(null != equipment.getName(), Equipment::getName, equipment.getName());
-        lambdaQueryWrapper.like(null != equipment.getDescription(), Equipment::getDescription, equipment.getDescription());
         lambdaQueryWrapper.like(null != equipment.getType(), Equipment::getType, equipment.getType());
-
+        lambdaQueryWrapper.like(null != equipment.getDescription(), Equipment::getDescription, equipment.getDescription());
+        lambdaQueryWrapper.like(null != equipment.getPurchaseTime(), Equipment::getPurchaseTime, equipment.getPurchaseTime());
         List<Equipment> equipmentList = super.list(lambdaQueryWrapper);
 
         // 封装为DTO结果集

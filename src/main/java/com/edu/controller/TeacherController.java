@@ -2,6 +2,7 @@ package com.edu.controller;
 
 import com.edu.commons.Result;
 import com.edu.entity.Teacher;
+import com.edu.model.TeacherDTO;
 import com.edu.service.ITeacherService;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,6 +69,16 @@ public class TeacherController {
     @PostMapping("/delete")
     public Result deleteById(@RequestBody List<Long> ids) {
         return teacherService.deleteById(ids);
+    }
+
+    /**
+     * 模糊查询
+     * @param teacher   封装的DTO类
+     * @return          查询结果
+     */
+    @PostMapping("/like")
+    public Result fuzzyQuery(@RequestBody TeacherDTO teacher){
+        return teacherService.fuzzyQuery(teacher);
     }
 }
 

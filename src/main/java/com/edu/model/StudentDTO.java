@@ -15,7 +15,7 @@ import lombok.Data;
 public class StudentDTO {
 
     // 主键Id
-    private String id;
+    private Long id;
 
     // 学生姓名
     private String name;

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
 import com.edu.entity.Teacher;
+import com.edu.model.TeacherDTO;
 
 import java.util.List;
 
@@ -50,4 +51,11 @@ public interface ITeacherService extends IService<Teacher> {
      * @return
      */
     Result deleteById(List<Long> ids);
+
+    /**
+     * 模糊查询
+     * @param teacher 封装的DTO对象
+     * @return  查询结果
+     */
+    Result fuzzyQuery(TeacherDTO teacher);
 }

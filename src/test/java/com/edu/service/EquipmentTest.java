@@ -3,6 +3,7 @@ package com.edu.service;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.Equipment;
+import com.edu.model.EquipmentDTO;
 import com.edu.utils.ids.IIdGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,5 +67,14 @@ public class EquipmentTest {
         Result all = equipmentService.getAll();
         logger.info("{}", all.getData());
         logger.info("code:{} info:{}", all.getCode(), all.getInfo());
+    }
+
+    @Test
+    public void testFuzzyGet() {
+        EquipmentDTO equipmentDTO = new EquipmentDTO();
+        equipmentDTO.setDepartmentName("办公室");
+        Result result = equipmentService.fuzzyQuery(equipmentDTO);
+        logger.info("{}", result.getData());
+        logger.info("code:{} info:{}", result.getCode(), result.getInfo());
     }
 }

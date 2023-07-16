@@ -118,23 +118,27 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             // 查询对应的部门ID列表
             LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
             departmentLambdaQueryWrapper.like(Department::getName, student.getDepartmentName());
-            Department department = departmentService.getOne(departmentLambdaQueryWrapper);
-            if (null == department) {
+            List<Department> departmentList = departmentService.list(departmentLambdaQueryWrapper);
+            if (0 == departmentList.size()) {
                 // 字段不存在，直接返回
                 return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
             }
-            // 查询对应的实验室字段
-            LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            studentLambdaQueryWrapper.eq(Student::getDepartmentId, department.getId());
-            List<Student> studentList = super.list(studentLambdaQueryWrapper);
 
-            // 封装为DTO对象结果集
-            List<StudentDTO> studentDTOList = studentList.stream().map(equip -> {
-                StudentDTO studentDTO = new StudentDTO();
-                BeanUtils.copyProperties(equip, studentDTO);
-                studentDTO.setDepartmentName(student.getDepartmentName());
-                return studentDTO;
-            }).collect(Collectors.toList());
+            // 查询对应的实验室字段
+            List<StudentDTO> studentDTOList = new LinkedList<>();
+            for(Department department : departmentList) {
+                LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                studentLambdaQueryWrapper.eq(Student::getDepartmentId, department.getId());
+                List<Student> studentList = super.list(studentLambdaQueryWrapper);
+                // 封装为DTO对象
+                List<StudentDTO> tempDtoList = studentList.stream().map(lab -> {
+                    StudentDTO studentDTO = new StudentDTO();
+                    BeanUtils.copyProperties(lab, studentDTO);
+                    studentDTO.setDepartmentName(department.getName());
+                    return studentDTO;
+                }).collect(Collectors.toList());
+                studentDTOList.addAll(tempDtoList);
+            }
 
             return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), studentDTOList);
         }
@@ -146,10 +150,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         lambdaQueryWrapper.eq(null != student.getGender(), Student::getGender, student.getGender());
 
         lambdaQueryWrapper.like(null != student.getName(), Student::getName, student.getName());
-        lambdaQueryWrapper.like(null != student.getPhone(), Student::getPhone, student.getPhone());
-        lambdaQueryWrapper.like(null != student.getGrade(), Student::getGrade, student.getGrade());
         lambdaQueryWrapper.like(null != student.getClazz(), Student::getClazz, student.getClazz());
         lambdaQueryWrapper.like(null != student.getDormitory(), Student::getDormitory, student.getDormitory());
+        lambdaQueryWrapper.like(null != student.getGrade(), Student::getGrade, student.getGrade());
+        lambdaQueryWrapper.like(null != student.getPhone(), Student::getPhone, student.getPhone());
 
         List<Student> studentList = super.list(lambdaQueryWrapper);
 

@@ -4,6 +4,7 @@ import cn.hutool.core.lang.UUID;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.Teacher;
+import com.edu.model.TeacherDTO;
 import com.edu.utils.ids.IIdGenerator;
 import org.apache.ibatis.annotations.Mapper;
 import org.junit.Test;
@@ -42,7 +43,7 @@ public class TeacherTest {
     public void testInsert() {
         Teacher teacher1 = new Teacher();
         teacher1.setGender(0);
-        teacher1.setDepartmentId(101L);
+        teacher1.setDepartmentId(236252161L);
         teacher1.setJob("negro");
         teacher1.setName("芙蓉王源");
         teacher1.setPhone("114514");
@@ -52,7 +53,7 @@ public class TeacherTest {
 
         Teacher teacher2 = new Teacher();
         teacher2.setGender(0);
-        teacher2.setDepartmentId(101L);
+        teacher2.setDepartmentId(236252161L);
         teacher2.setJob("rapper");
         teacher2.setName("尼古丁真");
         teacher2.setPhone("114514");
@@ -92,5 +93,15 @@ public class TeacherTest {
         }
         Result teacher = teacherService.getById(39286121L);
         logger.info("{}", teacher);
+    }
+
+    @Test
+    public void testFuzzyQuery() {
+        TeacherDTO teacherDTO = new TeacherDTO();
+//        teacherDTO.setDepartmentName("办公");
+        teacherDTO.setName("尼古");
+        Result result = teacherService.fuzzyQuery(teacherDTO);
+        logger.info("{}", result.getData());
+        logger.info("code:{} info:{}", result.getCode(), result.getInfo());
     }
 }

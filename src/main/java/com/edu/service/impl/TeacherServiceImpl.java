@@ -1,13 +1,16 @@
 package com.edu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.Department;
 import com.edu.entity.Equipment;
+import com.edu.entity.Laboratory;
 import com.edu.entity.Teacher;
 import com.edu.mapper.EquipmentMapper;
 import com.edu.mapper.TeacherMapper;
+import com.edu.model.LaboratoryDTO;
 import com.edu.model.StudentDTO;
 import com.edu.model.TeacherDTO;
 import com.edu.service.IDepartmentService;
@@ -19,6 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -115,6 +119,68 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
                 Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
+    }
+
+    @Override
+    public Result fuzzyQuery(TeacherDTO teacher) {
+        // 通过部门名称联表查寻
+        if (null != teacher.getDepartmentName()) {
+            // 查询对应的部门ID列表
+            LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            departmentLambdaQueryWrapper.like(Department::getName, teacher.getDepartmentName());
+            List<Department> departmentList = departmentService.list(departmentLambdaQueryWrapper);
+            if (0 == departmentList.size()) {
+                // 字段不存在，直接返回
+                return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
+            }
+
+            // 查询对应的实验室字段
+            List<TeacherDTO> teacherDTOList = new LinkedList<>();
+            for(Department department : departmentList) {
+                LambdaQueryWrapper<Teacher> teacherLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                teacherLambdaQueryWrapper.eq(Teacher::getDepartmentId, department.getId());
+                List<Teacher> teacherList = super.list(teacherLambdaQueryWrapper);
+                // 封装为DTO对象
+                List<TeacherDTO> tempDtoList = teacherList.stream().map(lab -> {
+                    TeacherDTO teacherDTO = new TeacherDTO();
+                    BeanUtils.copyProperties(lab, teacherDTO);
+                    teacherDTO.setDepartmentName(department.getName());
+                    return teacherDTO;
+                }).collect(Collectors.toList());
+                teacherDTOList.addAll(tempDtoList);
+            }
+
+            return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), teacherDTOList);
+        }
+
+        // 其他条件查询拼接
+        LambdaQueryWrapper<Teacher> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(null != teacher.getId(), Teacher::getId, teacher.getId());
+        lambdaQueryWrapper.eq(null != teacher.getDepartmentId(), Teacher::getDepartmentId, teacher.getDepartmentId());
+        lambdaQueryWrapper.eq(null != teacher.getSalary(), Teacher::getSalary, teacher.getSalary());
+        lambdaQueryWrapper.eq(null != teacher.getGender(), Teacher::getGender, teacher.getGender());
+
+        lambdaQueryWrapper.like(null != teacher.getName(), Teacher::getName, teacher.getName());
+        lambdaQueryWrapper.like(null != teacher.getJob(), Teacher::getJob, teacher.getJob());
+        lambdaQueryWrapper.like(null != teacher.getPhone(), Teacher::getPhone, teacher.getPhone());
+        List<Teacher> teacherList = super.list(lambdaQueryWrapper);
+
+        // 封装为DTO结果集
+        List<TeacherDTO> teacherDTOList = teacherList.stream().map((lab) -> {
+            // 查询部门名称
+            LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            departmentLambdaQueryWrapper.eq(Department::getId, lab.getDepartmentId());
+            Department department = departmentService.getOne(departmentLambdaQueryWrapper);
+
+            // 封装DTO信息
+            TeacherDTO teacherDTO = new TeacherDTO();
+            BeanUtils.copyProperties(lab, teacherDTO);
+            teacherDTO.setDepartmentName(department.getName());
+
+            return teacherDTO;
+        }).collect(Collectors.toList());
+
+        return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), teacherDTOList);
     }
 
     /**
