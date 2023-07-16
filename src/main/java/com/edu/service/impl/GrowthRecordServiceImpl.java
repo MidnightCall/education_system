@@ -10,6 +10,7 @@ import com.edu.mapper.GrowthRecordMapper;
 import com.edu.service.IGrowthRecordService;
 import com.edu.service.IStudentService;
 import com.edu.utils.ids.IIdGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ import java.util.function.Function;
  * @Version 1.0
  */
 @Service
+@Slf4j
 public class GrowthRecordServiceImpl extends ServiceImpl<GrowthRecordMapper, GrowthRecord> implements IGrowthRecordService {
     @Resource
     private Map<Constants.Ids, IIdGenerator> map;

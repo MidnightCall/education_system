@@ -40,11 +40,28 @@ public class GrowthRecordTest {
         growthRecord.setYear(15);
         result = growthRecordService.insert(growthRecord);
         log.info("code : {} info : {}", result.getCode(), result.getInfo());
+
+        growthRecord.setStuId(1679764891343933441L);
+        growthRecord.setYear(2023);
+        growthRecord.setLearning("你所热爱的，就是你的生活。");
+        result = growthRecordService.insert(growthRecord);
+        log.info("code : {} info : {}", result.getCode(), result.getInfo());
     }
 
     @Test
     public void testGetByStudentId(){
         Result result = growthRecordService.getByStudentId(1679764887720054786L);
+        for(GrowthRecord growthRecord : (List<GrowthRecord>) result.getData()){
+            log.info("{}, ", growthRecord);
+        }
+    }
+
+    @Test
+    public void testGet(){
+        Result result = growthRecordService.getById(1680188741311954944L);
+        log.info("code : {} info : {}", result.getCode(), result.getInfo());
+
+        result = growthRecordService.getAll();
         for(GrowthRecord growthRecord : (List<GrowthRecord>) result.getData()){
             log.info("{}, ", growthRecord);
         }
