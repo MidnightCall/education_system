@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
 import com.edu.entity.Student;
+import com.edu.model.StudentDTO;
 
 import java.util.List;
 
@@ -25,4 +26,11 @@ public interface IStudentService extends IService<Student> {
     Result insert(Student student);
 
     Result deleteById(List<Long> id);
+
+    /**
+     * 模糊查询接口
+     * @param studentDTO 实验室封装类
+     * @return           查询结果
+     */
+    Result fuzzyQuery(StudentDTO studentDTO);
 }

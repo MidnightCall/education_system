@@ -3,6 +3,7 @@ package com.edu.service;
 import com.edu.commons.Result;
 import com.edu.controller.StudentController;
 import com.edu.entity.Student;
+import com.edu.model.StudentDTO;
 import com.edu.service.impl.StudentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -55,9 +56,17 @@ public class StudentTest {
 //        log.info("{}", all.getData());
 //        log.info("code:{} info:{}", all.getCode(), all.getInfo());
 
-
         Result byId = studentService.getById(1679764887720054786L);
         log.info("{}", byId.getData());
         log.info("code:{} info:{}", byId.getCode(), byId.getInfo());
+    }
+
+    @Test
+    public void testFuzzyQuery() {
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setDepartmentName("办公");
+        Result result = studentService.fuzzyQuery(studentDTO);
+        log.info("{}", result.getData());
+        log.info("code:{} info:{}", result.getCode(), result.getInfo());
     }
 }

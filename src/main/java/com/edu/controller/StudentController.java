@@ -3,6 +3,8 @@ package com.edu.controller;
 import com.edu.commons.Result;
 import com.edu.entity.Student;
 import com.edu.entity.Teacher;
+import com.edu.model.EquipmentDTO;
+import com.edu.model.StudentDTO;
 import com.edu.service.IStudentService;
 import com.edu.service.ITeacherService;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +73,11 @@ public class StudentController {
     @PostMapping("/delete")
     public Result deleteById(@RequestBody List<Long> ids) {
         return studentService.deleteById(ids);
+    }
+
+    @PostMapping("/like")
+    public Result fuzzyQuery(@RequestBody StudentDTO studentDTO) {
+        return studentService.fuzzyQuery(studentDTO);
     }
 
 }

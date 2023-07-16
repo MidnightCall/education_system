@@ -82,10 +82,10 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             // 是否存在非空字段
             return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
         }
-//        if(!departmentIsExists(teacher.getDepartmentId())) {
-//            // 外键是否合法
-//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
-//        }
+        if(!departmentIsExists(teacher.getDepartmentId())) {
+            // 外键是否合法
+            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        }
         boolean flag = super.updateById(teacher);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo(), "") :
@@ -98,10 +98,10 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             // 是否存在非空字段
             return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
         }
-//        if(!departmentIsExists(teacher.getDepartmentId())) {
-//            // 外键是否合法
-//            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
-//        }
+        if(!departmentIsExists(teacher.getDepartmentId())) {
+            // 外键是否合法
+            return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
+        }
         teacher.setId(map.get(Constants.Ids.ShortCode).nextId());
         boolean flag = super.save(teacher);
         return flag ?
