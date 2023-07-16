@@ -77,7 +77,7 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result update(Equipment equipment) {
-//        if(!labIsExists(equipment.getLabId())){
+//        if(!departmentIsExists(equipment.getDepartmentId())){
 //            return Result.buildErrorResult("设备所属的实验室不存在");
 //        }
         boolean flag = super.updateById(equipment);
@@ -88,7 +88,7 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result insert(Equipment equipment) {
-//        if(!labIsExists(equipment.getLabId())){
+//        if(!departmentIsExists(equipment.getDepartmentId())){
 //            return Result.buildErrorResult("设备所属的实验室不存在");
 //        }
         equipment.setId(map.get(Constants.Ids.ShortCode).nextId());
@@ -107,11 +107,11 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
     }
 
     /**
-     * 辅助方法，判断实验室ID(外键是否存在)
-     * @param labId 实验室ID
+     * 辅助方法，判断部门ID(外键是否存在)
+     * @param departmentId 部门ID
      * @return      是否存在
      */
-    private boolean labIsExists(Long labId) {
-        return null != departmentService.getById(labId);
+    private boolean departmentIsExists(Long departmentId) {
+        return null != departmentService.getById(departmentId);
     }
 }
