@@ -37,7 +37,7 @@ public class StudentTest {
     public void testInsert() {
         Student student1 = new Student();
         student1.setGender(0);
-        student1.setDepartmentId(101L);
+        student1.setDepartmentId(236252161L);
         student1.setClazz("2020104");
         student1.setGrade("2020");
         student1.setName("丁真的小马");
@@ -46,7 +46,7 @@ public class StudentTest {
 
         Student student2 = new Student();
         student2.setGender(0);
-        student2.setDepartmentId(102L);
+        student2.setDepartmentId(236252165L);
         student2.setClazz("2020104");
         student2.setGrade("2020");
         student2.setName("陈睿的马");
@@ -62,7 +62,7 @@ public class StudentTest {
 //        log.info("{}", all.getData());
 //        log.info("code:{} info:{}", all.getCode(), all.getInfo());
 
-        Result byId = studentService.getById(1679764887720054786L);
+        Result byId = studentService.getById(2019102839L);
         log.info("{}", byId.getData());
         log.info("code:{} info:{}", byId.getCode(), byId.getInfo());
     }
