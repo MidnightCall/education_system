@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * @ClassName DepartmentServiceImpl
- * @Description
+ * @Description 部门模块的服务
  * @Author Lucas Wang
  * @Date 2023/7/13 20:07
  * @Version
@@ -39,11 +39,6 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     @Resource
     private LaboratoryMapper laboratoryMapper;
 
-    /**
-     * 查询单个部门服务
-     * @param id 部门id
-     * @return 查询结果
-     */
     @Override
     public Result queryById(Long id) {
         // 根据id查询部门
@@ -57,10 +52,6 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
 
     }
 
-    /**
-     * 查询所有部门服务
-     * @return 所有部门的列表
-     */
     @Override
     public Result queryAll() {
         // 查询所有部门的列表并且返回
@@ -68,11 +59,6 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), departments);
     }
 
-    /**
-     * 更新部门服务
-     * @param department 更新部门的新名字、地址
-     * @return 更新结果
-     */
     @Override
     public Result update(Department department) {
         // 根据id查询部门
@@ -94,11 +80,6 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
                 Result.buildErrorResult(Constants.OperationMessage.UPDATE_FAIL.getInfo());
     }
 
-    /**
-     * 新增部门服务
-     * @param department 新部门的参数，包含名字、地址
-     * @return 新增结果
-     */
     @Override
     public Result insert(Department department) {
         // 查看部门名字，若名字为空，则返回失败结果
@@ -115,11 +96,6 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
                 Result.buildErrorResult(Constants.OperationMessage.INSERT_FAIL.getInfo());
     }
 
-    /**
-     * 批量删除部门服务
-     * @param ids 需要被删除的部门id列表
-     * @return 删除结果
-     */
     @Override
     public Result deleteById(List<Long> ids) {
         // 若某个部门之下有剩余的对象，则返回删除失败
@@ -175,6 +151,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
      * @return 对应部门的名字
      */
     public String getName(Long id){
+        // 根据id查询对应部门并且返回其名字
         LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
         departmentLambdaQueryWrapper.eq(Department::getId, id);
         return super.getOne(departmentLambdaQueryWrapper).getName();

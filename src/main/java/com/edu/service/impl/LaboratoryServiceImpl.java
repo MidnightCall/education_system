@@ -46,7 +46,9 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
 
     @Override
     public Result getById(Long id) {
+        // 根据实验室id查询
         Laboratory laboratory = super.getById(id);
+        // 若不存在，则返回失败结果
         if (laboratory == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
@@ -57,7 +59,7 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
         LaboratoryDTO laboratoryDTO = new LaboratoryDTO();
         BeanUtils.copyProperties(laboratory, laboratory);
         laboratoryDTO.setDepartmentName(department.getName());
-
+        // 将DTO返回
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), laboratoryDTO);
     }
 
@@ -81,10 +83,11 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
 
     @Override
     public Result update(Laboratory laboratory) {
+        // 如果所属部门不存在，则返回失败结果
         if(!departmentIsExists(laboratory.getDepartmentId())){
             return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
         }
-
+        // 更新实验室，返回结果
         boolean flag = super.updateById(laboratory);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo()) :
@@ -93,10 +96,13 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
 
     @Override
     public Result insert(Laboratory laboratory) {
+        // 如果所属部门不存在，则返回失败结果
         if(!departmentIsExists(laboratory.getDepartmentId())){
             return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
         }
+        // 采用雪花策略生成id
         laboratory.setId(map.get(Constants.Ids.SnowFlake).nextId());
+        // 新增实验室并返回结果
         boolean flag = super.save(laboratory);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo()) :
@@ -105,6 +111,7 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
 
     @Override
     public Result deleteById(List<Long> ids) {
+        // 根据id列表批量删除实验室，返回结果
         boolean flag = super.removeByIds(ids);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo()) :

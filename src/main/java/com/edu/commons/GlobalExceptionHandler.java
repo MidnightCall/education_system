@@ -9,7 +9,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * @ClassName GlobalExceptionHandler
- * @Description
+ * @Description 处理系统的全局异常
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/16 8:31
  * @Version
