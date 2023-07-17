@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @ClassName GrowthRecordMapper
- * @Description TODO
+ * @Description 成长信息仓储服务
  * @Author LucasWang
  * @Date 2023/7/15 16:12:25
  * @Version 1.0

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @ClassName TeacherMapper
- * @Description
+ * @Description 教师仓储服务
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:24
  * @Version

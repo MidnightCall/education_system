@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 /**
  * @ClassName LaboratoryServiceImpl
- * @Description
+ * @Description 实验室业务实现
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 15:35
  * @Version

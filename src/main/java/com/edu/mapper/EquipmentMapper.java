@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @ClassName EquipmentMapper
- * @Description
+ * @Description 设备仓储服务
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 15:36
  * @Version

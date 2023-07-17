@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @ClassName LaboratoryDTO
- * @Description
+ * @Description 实验室聚合类，用于前端展示
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/15 9:15
  * @Version

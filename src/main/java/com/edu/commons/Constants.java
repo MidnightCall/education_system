@@ -3,7 +3,7 @@ package com.edu.commons;
 import com.edu.utils.ids.policy.RedisIdWorker;
 
 /**
- * @ClassName ReturnCode
+ * @ClassName Constants
  * @Description 常量
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 13:48
@@ -16,6 +16,7 @@ public class Constants {
     public static final String LOGIN_USER_KEY = "login:user:";
     //
     public static final int LOGIN_USER_TTL = 30;
+
     /**
      * 响应状态码
      */

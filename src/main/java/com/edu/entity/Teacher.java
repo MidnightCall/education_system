@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @ClassName Teacher
- * @Description
+ * @Description 教师数据库映射
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:23
  * @Version

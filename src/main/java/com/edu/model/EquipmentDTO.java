@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 /**
  * @ClassName EquipmentDTO
- * @Description
+ * @Description 设备聚合类，用于前端展示
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/15 9:00
  * @Version

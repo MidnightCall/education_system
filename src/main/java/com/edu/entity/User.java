@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @ClassName User
- * @Description
+ * @Description 用户数据库映射
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/14 8:44
  * @Version

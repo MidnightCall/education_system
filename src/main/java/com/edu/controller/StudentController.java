@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @ClassName StudentController
- * @Description
+ * @Description 学生Controller
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 14:59
  * @Version
@@ -75,6 +75,11 @@ public class StudentController {
         return studentService.deleteById(ids);
     }
 
+    /**
+     * 模糊查询
+     * @param studentDTO
+     * @return
+     */
     @PostMapping("/like")
     public Result fuzzyQuery(@RequestBody StudentDTO studentDTO) {
         return studentService.fuzzyQuery(studentDTO);

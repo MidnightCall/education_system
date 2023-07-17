@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @ClassName Student
- * @Description
+ * @Description 学生数据库映射
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:23
  * @Version
@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class Student {
     // 主键Id
-    private String id;
+    private Long id;
 
     // 学生姓名
     private String name;

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @ClassName DepartmentController
- * @Description
+ * @Description 学院类Controller
  * @Author Lucas Wang
  * @Date 2023/7/13 16:22
  * @Version

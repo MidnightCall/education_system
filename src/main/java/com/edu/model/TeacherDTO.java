@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @ClassName TeacherDTO
- * @Description
+ * @Description 教师聚合类，用于前端展示
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/15 9:10
  * @Version

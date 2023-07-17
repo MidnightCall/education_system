@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * @ClassName StudentDTO
- * @Description
+ * @Description 学生聚合类，用于前端展示
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/15 9:17
  * @Version

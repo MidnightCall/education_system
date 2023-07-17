@@ -10,21 +10,45 @@ import java.util.List;
 
 /**
  * @ClassName IStudentService
- * @Description
+ * @Description 学生业务接口定义
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:24
  * @Version
  */
 
 public interface IStudentService extends IService<Student> {
+    /**
+     * 查单个，回显
+     * @param id
+     * @return
+     */
     Result getById(Long id);
 
+    /**
+     * 查全部
+     * @return
+     */
     Result getAll();
 
+    /**
+     * 更新
+     * @param student
+     * @return
+     */
     Result update(Student student);
 
+    /**
+     * 插入
+     * @param student
+     * @return
+     */
     Result insert(Student student);
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     Result deleteById(List<Long> id);
 
     /**

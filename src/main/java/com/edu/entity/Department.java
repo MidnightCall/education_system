@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * @ClassName Department
- * @Description
+ * @Description 部门数据库映射
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 20:06
  * @Version

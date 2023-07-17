@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * @ClassName GrowthRecord
- * @Description
+ * @Description 成长信息映射
  * @Author Lucas Wang
  * @Date 2023/7/15 15:06
  * @Version

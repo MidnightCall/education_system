@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * @ClassName DepartmentServiceImpl
- * @Description
+ * @Description 部门业务实现
  * @Author Lucas Wang
  * @Date 2023/7/13 20:07
  * @Version

@@ -7,7 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-// 跨域过滤器
+/**
+ * @ClassName CORSFilter
+ * @Description 跨域过滤器
+ * @Author kojikoji 1310402980@qq.com
+ * @Date 2023/7/13 13:48
+ * @Version
+ */
 @Component
 public class CORSFilter implements Filter {
 

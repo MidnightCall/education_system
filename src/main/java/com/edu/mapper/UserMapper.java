@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @ClassName UserMapper
- * @Description
+ * @Description 用户仓储服务
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/14 8:46
  * @Version

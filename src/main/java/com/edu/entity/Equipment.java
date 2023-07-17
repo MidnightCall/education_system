@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * @ClassName Equipment
- * @Description
+ * @Description 设备数据库映射
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 14:55
  * @Version

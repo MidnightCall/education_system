@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @ClassName IEquipmentService
- * @Description
+ * @Description 设备业务接口定义
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 15:35
  * @Version
@@ -21,7 +21,7 @@ import java.util.List;
 public interface IEquipmentService extends IService<Equipment> {
 
     /**
-     * 查单个
+     * 数据回显
      * @param id
      * @return
      */
@@ -33,10 +33,25 @@ public interface IEquipmentService extends IService<Equipment> {
      */
     Result getAll();
 
+    /**
+     * 更新
+     * @param equipment
+     * @return
+     */
     Result update(Equipment equipment);
 
+    /**
+     * 插入
+     * @param equipment
+     * @return
+     */
     Result insert(Equipment equipment);
 
+    /**
+     * 删除
+     * @param ids
+     * @return
+     */
     Result deleteById(List<Long> ids);
 
     /**

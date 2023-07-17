@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @ClassName ITeacherService
- * @Description 教师业务接口
+ * @Description 教师业务接口定义
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:24
  * @Version

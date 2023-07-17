@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @ClassName IDepartmentService
- * @Description
+ * @Description 部门业务接口定义
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:24
  * @Version

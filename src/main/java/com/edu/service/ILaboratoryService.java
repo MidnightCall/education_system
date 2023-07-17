@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @ClassName ILaboratoryController
- * @Description 实验室接口
+ * @Description 实验室业务接口定义
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 15:35
  * @Version
@@ -18,7 +18,7 @@ import java.util.List;
 public interface ILaboratoryService extends IService<Laboratory> {
 
     /**
-     * 查单个
+     * 查单个，数据回显
      * @param id
      * @return
      */

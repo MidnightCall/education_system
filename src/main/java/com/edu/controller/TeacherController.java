@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @ClassName TeacherController
- * @Description 
+ * @Description 教师Controller
  * @Author kojikoji 1310402980@qq.com
  * @Date 2023/7/13 16:22
  * @Version
