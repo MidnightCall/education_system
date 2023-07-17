@@ -31,14 +31,14 @@ public class LaboratoryTest {
         Laboratory laboratory1 = new Laboratory();
         laboratory1.setName("理塘");
         laboratory1.setAddress("世界最高城");
-        laboratory1.setDepartmentId(101L);
+        laboratory1.setDepartmentId(236252161L);
         Result result1 = laboratoryService.insert(laboratory1);
         log.info("code:{} info:{}", result1.getCode(), result1.getInfo());
 
         Laboratory laboratory2 = new Laboratory();
         laboratory2.setName("四川大学男厕所");
         laboratory2.setAddress("null");
-        laboratory2.setDepartmentId(102L);
+        laboratory2.setDepartmentId(236252165L);
         Result result2 = laboratoryService.insert(laboratory2);
 
         log.info("code:{} info:{}", result2.getCode(), result2.getInfo());

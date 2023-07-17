@@ -39,17 +39,18 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public Result getById(Long id) {
         Student student = super.getById(id);
+        // 学生不存在，则返回失败结果
         if (student == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
 
         // 查询对应的部门名称
         Department department = departmentService.getById(student.getDepartmentId());
-
+        // 封装成DTO
         StudentDTO studentDTO = new StudentDTO();
         BeanUtils.copyProperties(student, studentDTO);
         studentDTO.setDepartmentName(department.getName());
-        
+        // 返回DTO
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), studentDTO);
     }
 
@@ -105,6 +106,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Override
     public Result deleteById(List<Long> ids) {
+        // 批量删除
         boolean flag = super.removeByIds(ids);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :

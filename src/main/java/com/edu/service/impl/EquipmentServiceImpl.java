@@ -45,18 +45,20 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result getById(Long id) {
+        // 根据id查询设备
         Equipment equipment = super.getById(id);
+        // 如果对应设备不存在，则返回失败结果
         if (equipment == null) {
             return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
         }
 
         // 查询对应的部门名称
         Department department = departmentService.getById(equipment.getDepartmentId());
-
+        // 生成对应设备的DTO
         EquipmentDTO equipmentDTO = new EquipmentDTO();
         BeanUtils.copyProperties(equipment, equipmentDTO);
         equipmentDTO.setDepartmentName(department.getName());
-
+        // 返回DTO
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), equipmentDTO);
     }
 
@@ -74,15 +76,17 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
             equipmentDTO.setDepartmentName(department.getName());
             return equipmentDTO;
         })).collect(Collectors.toList());
-
+        // 返回查询结果
         return Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.SELECT_SUCCESS.getInfo(), equipmentDTOList);
     }
 
     @Override
     public Result update(Equipment equipment) {
+        // 如果所属部门不存在，则返回失败结果
         if(!departmentIsExists(equipment.getDepartmentId())){
             return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
         }
+        // 更新对应设备，返回结果
         boolean flag = super.updateById(equipment);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.UPDATE_SUCCESS.getInfo()) :
@@ -91,10 +95,13 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result insert(Equipment equipment) {
+        // 如果所属部门不存在，则返回失败结果
         if(!departmentIsExists(equipment.getDepartmentId())){
             return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
         }
+        // 采用日期算法分配新的id
         equipment.setId(map.get(Constants.Ids.ShortCode).nextId());
+        // 新增设备并返回结果
         boolean flag = super.save(equipment);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.INSERT_SUCCESS.getInfo(), "") :
@@ -103,6 +110,7 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentMapper, Equipment
 
     @Override
     public Result deleteById(List<Long> ids) {
+        // 批量删除设备并返回结果
         boolean flag = super.removeByIds(ids);
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
