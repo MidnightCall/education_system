@@ -5,22 +5,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.*;
-import com.edu.mapper.EquipmentMapper;
 import com.edu.mapper.StudentMapper;
-import com.edu.model.EquipmentDTO;
-import com.edu.model.LaboratoryDTO;
 import com.edu.model.StudentDTO;
 import com.edu.service.IDepartmentService;
-import com.edu.service.IEquipmentService;
 import com.edu.service.IStudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.edu.commons.Constants.*;
 
 /**
  * @ClassName StudentServiceImpl
@@ -32,7 +31,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
-
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     @Resource
     private IDepartmentService departmentService;
 
@@ -94,6 +94,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             // 是否存在不合法的非空字段
             return Result.buildErrorResult(Constants.OperationMessage.NULL_ERROR.getInfo());
         }
+        // 生成学生id
+        createStudentId(student);
+
         if(!departmentIsExists(student.getDepartmentId())){
             // 检查外键
             return Result.buildErrorResult(Constants.OperationMessage.DEPART_NOT_EXIST.getInfo());
@@ -195,6 +198,24 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
      */
     public boolean departmentIsExists(Long departmentId) {
         return null != departmentService.getById(departmentId);
+    }
+
+    /**
+     * 生成学生id
+     * @param student 需要生成id的学生
+     */
+    private void createStudentId(Student student) {
+        // 获得学生年级
+        long grade = Long.parseLong(student.getGrade());
+        // 获取学生所属学院的序列号
+        long departmentIcr = student.getDepartmentId() % IRC_DEPARTMENT_MASK;
+        // 获取学生的序列号
+        String key = IRC_STUDENT_KEY + grade + ":" + departmentIcr;
+        Long increment = stringRedisTemplate.opsForValue().increment(key);
+        // 生成学生id
+        long id = (grade * IRC_DEPARTMENT_MASK + departmentIcr) * IRC_STUDENT_MASK + increment;
+        // 设置学生id
+        student.setId(id);
     }
 
 }

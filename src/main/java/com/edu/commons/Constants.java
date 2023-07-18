@@ -1,7 +1,5 @@
 package com.edu.commons;
 
-import com.edu.utils.ids.policy.RedisIdWorker;
-
 /**
  * @ClassName Constants
  * @Description 常量
@@ -14,8 +12,18 @@ public class Constants {
 
     // redis登录令牌的key的前缀
     public static final String LOGIN_USER_KEY = "login:user:";
-    //
+    // 用户登录token的有效期
     public static final int LOGIN_USER_TTL = 30;
+
+    // 生成部门id的自增序列key
+    public static final String IRC_DEPARTMENT_KEY = "icr:department";
+    // 获取部门序列号的MASK
+    public static final int IRC_DEPARTMENT_MASK = 10000;
+
+    // 生成学生id的自增序列号key
+    public static final String IRC_STUDENT_KEY = "icr:student";
+    // 获取学生序列号的MASK
+    public static final int IRC_STUDENT_MASK = 10000;
 
     /**
      * 响应状态码
@@ -67,9 +75,7 @@ public class Constants {
         // 日期算法
         ShortCode,
         // 随机算法
-        RandomNumeric,
-        // redis自增算法
-        RedisIdWorker;
+        RandomNumeric
     }
 
     // 操作结果提示语句

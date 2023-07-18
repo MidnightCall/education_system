@@ -2,20 +2,13 @@ package com.edu.service;
 
 import com.edu.commons.Result;
 import com.edu.entity.Department;
-import com.edu.entity.Teacher;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +46,8 @@ public class DepartmentTest {
     public void testUpdate() {
         Result result = departmentService.queryById(236252162L);
         Department department = (Department) result.getData();
-        department.setAddress("四川大学行政楼");
-       result = departmentService.update(department);
+        department.setAddress("四川大学");
+        result = departmentService.update(department);
         log.info("code : {} info : {}", result.getCode(), result.getInfo());
     }
 

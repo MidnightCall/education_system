@@ -1,12 +1,11 @@
 package com.edu.service;
 
-import cn.hutool.core.lang.UUID;
+
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
 import com.edu.entity.Teacher;
 import com.edu.model.TeacherDTO;
 import com.edu.utils.ids.IIdGenerator;
-import org.apache.ibatis.annotations.Mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -15,14 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 
 /**
  * @ClassName TeacherTest
@@ -41,8 +37,6 @@ public class TeacherTest {
     @Resource
     private ITeacherService teacherService;
 
-    @Resource
-    private Map<Constants.Ids, IIdGenerator> map;
 
     @Test
     public void testInsert() {

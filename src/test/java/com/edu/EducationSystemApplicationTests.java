@@ -10,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @SpringBootTest
@@ -28,11 +26,9 @@ class EducationSystemApplicationTests {
         long shortId = map.get(Constants.Ids.ShortCode).nextId();
         long snowFlakeId = map.get(Constants.Ids.SnowFlake).nextId();
         long randomId = map.get(Constants.Ids.RandomNumeric).nextId();
-        long redisId = map.get(Constants.Ids.RedisIdWorker).nextId();
         logger.info("ShortCode:{}", shortId);
         logger.info("SnowFlakeCode:{}", snowFlakeId);
         logger.info("randomId:{}", randomId);
-        logger.info("redisId:{}", redisId);
     }
 
     @Test

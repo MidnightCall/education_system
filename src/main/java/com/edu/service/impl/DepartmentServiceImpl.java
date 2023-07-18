@@ -7,13 +7,17 @@ import com.edu.commons.Result;
 import com.edu.entity.*;
 import com.edu.mapper.*;
 import com.edu.service.*;
-import com.edu.utils.ids.IIdGenerator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
+
+import static com.edu.commons.Constants.IRC_DEPARTMENT_KEY;
+import static com.edu.commons.Constants.IRC_DEPARTMENT_MASK;
 
 /**
  * @ClassName DepartmentServiceImpl
@@ -27,7 +31,7 @@ import java.util.Map;
 public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Department> implements IDepartmentService {
 
     @Resource
-    private Map<Constants.Ids, IIdGenerator> map;
+    private StringRedisTemplate stringRedisTemplate;
 
     // 获取Student、Teacher、Equipment、Laboratory四个mapper的bean
     @Resource
@@ -77,9 +81,9 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     public Result update(Department department) {
         // 根据id查询部门
         Long id = department.getId();
-        Integer count = query().eq("id", id).count();
+        Department one = query().eq("id", id).one();
         // 如果该部门不存在，则返回失败结果
-        if(count.intValue() < 1){
+        if(one == null){
             return Result.buildErrorResult("部门不存在");
         }
         // 查看新的部门名字，若名字为空，则返回失败结果
@@ -104,10 +108,10 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         // 查看部门名字，若名字为空，则返回失败结果
         String name = department.getName();
         if(name == null || name.isEmpty()){
-            return Result.buildErrorResult(Constants.OperationMessage.INSERT_FAIL.getInfo());
+            return Result.buildErrorResult("部门名字不能为空");
         }
-        // 采用reids自增策略生成部门id
-        department.setId(map.get(Constants.Ids.RedisIdWorker).nextId());
+        // 生成部门id
+        createDepartmentId(department);
         // 根据保存结果返回新增结果
         boolean flag = super.save(department);
         return flag ?
@@ -178,5 +182,22 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
         departmentLambdaQueryWrapper.eq(Department::getId, id);
         return super.getOne(departmentLambdaQueryWrapper).getName();
+    }
+
+    /**
+     * 生成部门的id
+     * @param department 需要生成id的部门
+     */
+    public void createDepartmentId(Department department) {
+        // 获取当前时间
+        LocalDateTime now = LocalDateTime.now();
+        // 获取当前日期
+        String date = now.format(DateTimeFormatter.ofPattern("yyMM"));
+        // 获得自增长的序列号
+        Long increment = stringRedisTemplate.opsForValue().increment(IRC_DEPARTMENT_KEY);
+        // 生成部门id
+        long id = Long.parseLong(date) * IRC_DEPARTMENT_MASK + increment;
+        // 设置部门id
+        department.setId(id);
     }
 }
