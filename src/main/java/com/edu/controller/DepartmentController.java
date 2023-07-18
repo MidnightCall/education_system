@@ -47,7 +47,7 @@ public class DepartmentController {
      * @return 更新结果
      */
     @PostMapping
-    public Result update(Department department){
+    public Result update(@RequestBody Department department){
         return departmentService.update(department);
     }
 
@@ -57,7 +57,7 @@ public class DepartmentController {
      * @return 插入结果
      */
     @PutMapping
-    public Result insert(Department department){
+    public Result insert(@RequestBody Department department){
         return departmentService.insert(department);
     }
 

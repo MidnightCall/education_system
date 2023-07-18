@@ -80,12 +80,12 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         Integer count = query().eq("id", id).count();
         // 如果该部门不存在，则返回失败结果
         if(count.intValue() < 1){
-            return Result.buildErrorResult(Constants.OperationMessage.UPDATE_FAIL.getInfo());
+            return Result.buildErrorResult("部门不存在");
         }
         // 查看新的部门名字，若名字为空，则返回失败结果
         String name = department.getName();
         if(name == null || name.isEmpty()){
-            return Result.buildErrorResult(Constants.OperationMessage.UPDATE_FAIL.getInfo());
+            return Result.buildErrorResult("部门名字不能为空");
         }
         // 根据更新结果返回
         boolean flag = super.updateById(department);

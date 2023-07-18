@@ -51,11 +51,10 @@ public class DepartmentTest {
 
     @Test
     public void testUpdate() {
-        Department department = new Department();
-        department.setId(236252162L);
-        department.setAddress("教学楼");
-        department.setName("教务处");
-        Result result = departmentService.update(department);
+        Result result = departmentService.queryById(236252162L);
+        Department department = (Department) result.getData();
+        department.setAddress("四川大学行政楼");
+       result = departmentService.update(department);
         log.info("code : {} info : {}", result.getCode(), result.getInfo());
     }
 
