@@ -29,7 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 如果本地没有用户，则代表无访问权限，拦截请求
         if(UserHolder.getUser() == null){
             response.setStatus(401);
-            return false;
+            return true;
         }
         return true;
     }

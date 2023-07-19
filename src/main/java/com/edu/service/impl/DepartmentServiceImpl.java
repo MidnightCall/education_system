@@ -188,7 +188,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
      * 生成部门的id
      * @param department 需要生成id的部门
      */
-    public void createDepartmentId(Department department) {
+    private void createDepartmentId(Department department) {
         // 获取当前时间
         LocalDateTime now = LocalDateTime.now();
         // 获取当前日期

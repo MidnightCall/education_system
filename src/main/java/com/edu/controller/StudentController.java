@@ -7,6 +7,9 @@ import com.edu.model.EquipmentDTO;
 import com.edu.model.StudentDTO;
 import com.edu.service.IStudentService;
 import com.edu.service.ITeacherService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/student")
+@Api
 public class StudentController {
 
     @Resource
@@ -32,7 +36,8 @@ public class StudentController {
      * @return 查询结果
      */
     @GetMapping("/{id}")
-    public Result getById(@PathVariable Long id){
+    @ApiOperation("通过ID查询学生信息")
+    public Result getById(@ApiParam(name = "学生ID", value = "ID", required = true) @PathVariable Long id){
         return studentService.getById(id);
     }
 
@@ -41,6 +46,7 @@ public class StudentController {
      * @return 所有学生的列表
      */
     @GetMapping
+    @ApiOperation("获取所有学生信息")
     public Result getAll(){
         return studentService.getAll();
     }
@@ -51,7 +57,8 @@ public class StudentController {
      * @return 更新结果
      */
     @PostMapping
-    public Result update(@RequestBody Student student){
+    @ApiOperation("更新学生信息")
+    public Result update(@ApiParam(name = "学生信息", value = "更新数据", required = true) @RequestBody Student student){
         return studentService.update(student);
     }
 
@@ -61,7 +68,8 @@ public class StudentController {
      * @return 新增结果
      */
     @PutMapping
-    public Result insert(@RequestBody Student student) {
+    @ApiOperation("新增学生信息")
+    public Result insert(@ApiParam(name = "学生信息", value = "更新数据", required = true) @RequestBody Student student) {
         return studentService.insert(student);
     }
 
@@ -71,7 +79,8 @@ public class StudentController {
      * @return 删除结果
      */
     @PostMapping("/delete")
-    public Result deleteById(@RequestBody List<Long> ids) {
+    @ApiOperation("删除学生")
+    public Result deleteById(@ApiParam(name = "学生ID", value = "ID", required = true) @RequestBody List<Long> ids) {
         return studentService.deleteById(ids);
     }
 
@@ -81,7 +90,8 @@ public class StudentController {
      * @return
      */
     @PostMapping("/like")
-    public Result fuzzyQuery(@RequestBody StudentDTO studentDTO) {
+    @ApiOperation("学生模糊查询")
+    public Result fuzzyQuery(@ApiParam(name = "学生信息", value = "学生查询数据", required = true) @RequestBody StudentDTO studentDTO) {
         return studentService.fuzzyQuery(studentDTO);
     }
 

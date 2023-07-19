@@ -4,6 +4,9 @@ import com.edu.commons.Result;
 import com.edu.entity.Teacher;
 import com.edu.model.TeacherDTO;
 import com.edu.service.ITeacherService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/teacher")
+@Api
 public class TeacherController {
     @Resource
     private ITeacherService teacherService;
@@ -28,7 +32,8 @@ public class TeacherController {
      * @return 查询结果
      */
     @GetMapping("/{id}")
-    public Result getById(@PathVariable Long id){
+    @ApiOperation("通过ID查询教师信息")
+    public Result getById(@ApiParam(name = "教师ID", value = "ID", required = true) @PathVariable Long id){
         return teacherService.getById(id);
     }
 
@@ -37,6 +42,7 @@ public class TeacherController {
      * @return 所有教师的查询结果
      */
     @GetMapping
+    @ApiOperation("获取所有教师数据")
     public Result getAll(){
         return teacherService.getAll();
     }
@@ -47,7 +53,8 @@ public class TeacherController {
      * @return 更新结果
      */
     @PostMapping
-    public Result update(@RequestBody Teacher teacher){
+    @ApiOperation("更新教师信息")
+    public Result update(@ApiParam(name = "教师信息", value = "更新数据", required = true) @RequestBody Teacher teacher){
         return teacherService.update(teacher);
     }
 
@@ -57,7 +64,8 @@ public class TeacherController {
      * @return 新增结果
      */
     @PutMapping
-    public Result insert(@RequestBody Teacher teacher) {
+    @ApiOperation("新增学生信息")
+    public Result insert(@ApiParam(name = "教师信息", value = "更新数据", required = true) @RequestBody Teacher teacher) {
         return teacherService.insert(teacher);
     }
 
@@ -67,7 +75,8 @@ public class TeacherController {
      * @return 删除结果
      */
     @PostMapping("/delete")
-    public Result deleteById(@RequestBody List<Long> ids) {
+    @ApiOperation("删除教师")
+    public Result deleteById(@ApiParam(name = "教师ID", value = "ID", required = true) @RequestBody List<Long> ids) {
         return teacherService.deleteById(ids);
     }
 
@@ -77,7 +86,8 @@ public class TeacherController {
      * @return          查询结果
      */
     @PostMapping("/like")
-    public Result fuzzyQuery(@RequestBody TeacherDTO teacher){
+    @ApiOperation("教师模糊查询")
+    public Result fuzzyQuery(@ApiParam(name = "教师信息", value = "教师查询数据", required = true) @RequestBody TeacherDTO teacher){
         return teacherService.fuzzyQuery(teacher);
     }
 }

@@ -3,6 +3,9 @@ package com.edu.controller;
 import com.edu.commons.Result;
 import com.edu.entity.Department;
 import com.edu.service.IDepartmentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/department")
+@Api
 public class DepartmentController {
     @Resource
     private IDepartmentService departmentService;
@@ -28,7 +32,8 @@ public class DepartmentController {
      * @return 查询结果
      */
     @GetMapping("/{id}")
-    public Result queryById(@PathVariable("id") Long id){
+    @ApiOperation(value = "部门查询")
+    public Result queryById( @ApiParam(name = "部门Id", value = "Id", required = true) @PathVariable("id") Long id){
         return departmentService.queryById(id);
     }
 
@@ -37,6 +42,7 @@ public class DepartmentController {
      * @return 查询所有部门的结果
      */
     @GetMapping
+    @ApiOperation(value = "查询全部")
     public Result queryAll(){
         return departmentService.queryAll();
     }
@@ -47,7 +53,8 @@ public class DepartmentController {
      * @return 更新结果
      */
     @PostMapping
-    public Result update(@RequestBody Department department){
+    @ApiOperation(value = "更新部门")
+    public Result update(@ApiParam(name = "部门", value = "更新数据", required = true) @RequestBody Department department){
         return departmentService.update(department);
     }
 
@@ -57,7 +64,8 @@ public class DepartmentController {
      * @return 插入结果
      */
     @PutMapping
-    public Result insert(@RequestBody Department department){
+    @ApiOperation(value = "新增数据")
+    public Result insert(@ApiParam(name = "部门", value = "更新数据", required = true) @RequestBody Department department){
         return departmentService.insert(department);
     }
 
@@ -67,7 +75,8 @@ public class DepartmentController {
      * @return 删除结果
      */
     @PostMapping("/delete")
-    public Result deleteById(@RequestBody List<Long> ids) {
+    @ApiOperation(value = "删除")
+    public Result deleteById( @ApiParam(name = "部门Id", value = "Id", required = true) @RequestBody List<Long> ids) {
         return departmentService.deleteById(ids);
     }
 }

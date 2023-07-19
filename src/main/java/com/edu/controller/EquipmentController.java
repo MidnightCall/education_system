@@ -5,7 +5,11 @@ import com.edu.entity.Equipment;
 import com.edu.model.EquipmentDTO;
 import com.edu.model.LaboratoryDTO;
 import com.edu.service.IEquipmentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/equipment")
+@Api
 public class EquipmentController {
     @Resource
     private IEquipmentService equipmentService;
@@ -29,7 +34,8 @@ public class EquipmentController {
      * @return 查询结果
      */
     @GetMapping("/{id}")
-    public Result getById(@PathVariable Long id){
+    @ApiOperation(value = "更新设备")
+    public Result getById(@ApiParam(name = "设备ID", value = "id", required = true) @PathVariable Long id){
         return equipmentService.getById(id);
     }
 
@@ -38,6 +44,7 @@ public class EquipmentController {
      * @return 查询结果
      */
     @GetMapping
+    @ApiOperation(value = "获取所有设备")
     public Result getAll(){
         return equipmentService.getAll();
     }
@@ -48,7 +55,8 @@ public class EquipmentController {
      * @return 更新结果
      */
     @PostMapping
-    public Result update(@RequestBody Equipment equipment){
+    @ApiOperation(value = "更新设备")
+    public Result update(@ApiParam(name = "设备", value = "更新数据", required = true) @RequestBody Equipment equipment){
         return equipmentService.update(equipment);
     }
 
@@ -58,7 +66,8 @@ public class EquipmentController {
      * @return 新增结果
      */
     @PutMapping
-    public Result insert(@RequestBody Equipment equipment) {
+    @ApiOperation(value = "新增设备")
+    public Result insert(@ApiParam(name = "设备", value = "更新数据", required = true) @RequestBody Equipment equipment) {
         return equipmentService.insert(equipment);
     }
 
@@ -68,7 +77,8 @@ public class EquipmentController {
      * @return 删除结果
      */
     @PostMapping("/delete")
-    public Result deleteById(@RequestBody List<Long> ids) {
+    @ApiOperation("删除设备")
+    public Result deleteById(@ApiParam(name = "设备ID", value = "ID", required = true) @RequestBody List<Long> ids) {
         return equipmentService.deleteById(ids);
     }
 
@@ -78,7 +88,8 @@ public class EquipmentController {
      * @return 查询结果
      */
     @PostMapping("/like")
-    public Result fuzzyQuery(@RequestBody EquipmentDTO equipment) {
+    @ApiOperation("设备模糊查询")
+    public Result fuzzyQuery(@ApiParam(name = "设备", value = "查询数据", required = true) @RequestBody EquipmentDTO equipment) {
         return equipmentService.fuzzyQuery(equipment);
     }
 }
