@@ -2,7 +2,9 @@ package com.edu.controller;
 
 import com.edu.commons.Result;
 import com.edu.entity.GrowthRecord;
+import com.edu.model.LaboratoryDTO;
 import com.edu.service.IGrowthRecordService;
+import com.kojikoji.middleware.ratelimiter.annotation.DoRateLimiter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -33,6 +35,7 @@ public class GrowthRecordController {
      */
     @GetMapping("/{id}")
     @ApiOperation("由ID查询成长信息")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getById(@ApiParam(name = "成长信息ID", value = "ID", required = true) @PathVariable Long id){
         return growthRecordService.getById(id);
     }
@@ -43,6 +46,7 @@ public class GrowthRecordController {
      */
     @GetMapping
     @ApiOperation("查询所有成长信息")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getAll(){
         return growthRecordService.getAll();
     }
@@ -89,5 +93,16 @@ public class GrowthRecordController {
     @ApiOperation("批量删除成长信息")
     public Result deleteById(@ApiParam(name = "成长信息ID", value = "ID", required = true) @RequestBody List<Long> ids) {
         return growthRecordService.deleteById(ids);
+    }
+
+    /**
+     * 模糊查询
+     * @param laboratory
+     * @return
+     */
+    @PostMapping("/like")
+    @ApiOperation("实验室模糊查询")
+    public Result fuzzyQuery(@ApiParam(name = "实验室", value = "查询数据", required = true) @RequestBody LaboratoryDTO laboratory) {
+        return growthRecordService.fuzzyQuery(laboratory);
     }
 }

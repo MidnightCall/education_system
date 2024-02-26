@@ -3,6 +3,7 @@ package com.edu.controller;
 import com.edu.commons.Result;
 import com.edu.entity.Department;
 import com.edu.service.IDepartmentService;
+import com.kojikoji.middleware.ratelimiter.annotation.DoRateLimiter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -33,6 +34,7 @@ public class DepartmentController {
      */
     @GetMapping("/{id}")
     @ApiOperation(value = "部门查询")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result queryById( @ApiParam(name = "部门Id", value = "Id", required = true) @PathVariable("id") Long id){
         return departmentService.queryById(id);
     }
@@ -43,6 +45,7 @@ public class DepartmentController {
      */
     @GetMapping
     @ApiOperation(value = "查询全部")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result queryAll(){
         return departmentService.queryAll();
     }

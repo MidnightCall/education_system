@@ -48,17 +48,19 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         converters.add(0, mappingJackson2HttpMessageConverter);
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        //token刷新拦截器
-//        registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate)).addPathPatterns("/**").order(0);
-//        // 登录拦截器
-//        registry.addInterceptor(new LoginInterceptor())
-//                .excludePathPatterns(
-//                        "/user/login",
-//                        "/user/register"
-//                ).order(1);
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //token刷新拦截器
+        registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate))
+                .addPathPatterns("/**")
+                .order(0);
+        // 登录拦截器
+        registry.addInterceptor(new LoginInterceptor())
+                .excludePathPatterns(
+                        "/user/login",
+                        "/user/register"
+                ).order(1);
+    }
 
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -3,6 +3,7 @@ package com.edu.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.commons.Result;
 import com.edu.entity.GrowthRecord;
+import com.edu.model.LaboratoryDTO;
 
 import java.util.List;
 
@@ -55,4 +56,6 @@ public interface IGrowthRecordService extends IService<GrowthRecord> {
      * @return
      */
     Result deleteById(List<Long> ids);
+
+    Result fuzzyQuery(LaboratoryDTO laboratory);
 }

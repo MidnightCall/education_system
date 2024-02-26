@@ -4,6 +4,7 @@ import com.edu.commons.Result;
 import com.edu.entity.Teacher;
 import com.edu.model.TeacherDTO;
 import com.edu.service.ITeacherService;
+import com.kojikoji.middleware.ratelimiter.annotation.DoRateLimiter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -33,6 +34,7 @@ public class TeacherController {
      */
     @GetMapping("/{id}")
     @ApiOperation("通过ID查询教师信息")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getById(@ApiParam(name = "教师ID", value = "ID", required = true) @PathVariable Long id){
         return teacherService.getById(id);
     }
@@ -43,6 +45,7 @@ public class TeacherController {
      */
     @GetMapping
     @ApiOperation("获取所有教师数据")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getAll(){
         return teacherService.getAll();
     }

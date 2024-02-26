@@ -5,6 +5,7 @@ import com.edu.entity.Equipment;
 import com.edu.model.EquipmentDTO;
 import com.edu.model.LaboratoryDTO;
 import com.edu.service.IEquipmentService;
+import com.kojikoji.middleware.ratelimiter.annotation.DoRateLimiter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -35,6 +36,7 @@ public class EquipmentController {
      */
     @GetMapping("/{id}")
     @ApiOperation(value = "更新设备")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getById(@ApiParam(name = "设备ID", value = "id", required = true) @PathVariable Long id){
         return equipmentService.getById(id);
     }
@@ -45,6 +47,7 @@ public class EquipmentController {
      */
     @GetMapping
     @ApiOperation(value = "获取所有设备")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getAll(){
         return equipmentService.getAll();
     }

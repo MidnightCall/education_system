@@ -7,6 +7,7 @@ import com.edu.model.EquipmentDTO;
 import com.edu.model.StudentDTO;
 import com.edu.service.IStudentService;
 import com.edu.service.ITeacherService;
+import com.kojikoji.middleware.ratelimiter.annotation.DoRateLimiter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -37,6 +38,7 @@ public class StudentController {
      */
     @GetMapping("/{id}")
     @ApiOperation("通过ID查询学生信息")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getById(@ApiParam(name = "学生ID", value = "ID", required = true) @PathVariable Long id){
         return studentService.getById(id);
     }
@@ -47,6 +49,7 @@ public class StudentController {
      */
     @GetMapping
     @ApiOperation("获取所有学生信息")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getAll(){
         return studentService.getAll();
     }

@@ -7,6 +7,7 @@ import com.edu.commons.Result;
 import com.edu.entity.GrowthRecord;
 import com.edu.entity.Student;
 import com.edu.mapper.GrowthRecordMapper;
+import com.edu.model.LaboratoryDTO;
 import com.edu.service.IGrowthRecordService;
 import com.edu.service.IStudentService;
 import com.edu.utils.ids.IIdGenerator;
@@ -101,6 +102,11 @@ public class GrowthRecordServiceImpl extends ServiceImpl<GrowthRecordMapper, Gro
         return flag ?
                 Result.buildResult(Constants.ResponseCode.OK, Constants.OperationMessage.DELETE_SUCCESS.getInfo(), "") :
                 Result.buildErrorResult(Constants.OperationMessage.DELETE_FAIL.getInfo());
+    }
+
+    @Override
+    public Result fuzzyQuery(LaboratoryDTO laboratory) {
+        return Result.buildErrorResult("暂未开发此功能");
     }
 
     /**

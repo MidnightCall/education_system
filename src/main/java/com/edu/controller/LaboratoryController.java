@@ -5,6 +5,7 @@ import com.edu.commons.Result;
 import com.edu.entity.Laboratory;
 import com.edu.model.LaboratoryDTO;
 import com.edu.service.ILaboratoryService;
+import com.kojikoji.middleware.ratelimiter.annotation.DoRateLimiter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -37,6 +38,7 @@ public class LaboratoryController {
      */
     @GetMapping("/{id}")
     @ApiOperation("通过ID查询实验室信息")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getById(@ApiParam(name = "实验室ID", value = "ID", required = true) @PathVariable Long id){
         return laboratoryService.getById(id);
     }
@@ -47,6 +49,7 @@ public class LaboratoryController {
      */
     @GetMapping
     @ApiOperation("查询所有实验室信息")
+    @DoRateLimiter(permitsPerSecond = 100, returnJson = "超出流量限制")
     public Result getAll(){
         return laboratoryService.getAll();
     }

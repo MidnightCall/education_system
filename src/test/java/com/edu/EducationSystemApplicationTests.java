@@ -1,6 +1,8 @@
 package com.edu;
 
+import com.alibaba.fastjson.JSON;
 import com.edu.commons.Constants;
+import com.edu.entity.User;
 import com.edu.utils.ids.IIdGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +34,12 @@ class EducationSystemApplicationTests {
     }
 
     @Test
-    void contextLoads() {
+    public void testUser() {
+        User user = new User();
+        user.setUsername("zjc");
+        user.setPassword("123456");
+        logger.info("user: {}", JSON.toJSON(user));
     }
+
 
 }

@@ -1,8 +1,11 @@
 package com.edu.controller;
 
+import com.edu.commons.Constants;
 import com.edu.commons.Result;
+import com.edu.config.RateLimiterConfig;
 import com.edu.entity.User;
 import com.edu.service.IUserService;
+import com.google.common.util.concurrent.RateLimiter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,8 +37,16 @@ public class UserController {
     @PostMapping("/login")
     @ApiOperation("用户登录")
     public Result login(@ApiParam(name = "登录数据", value = "登陆数据", required = true) @RequestBody User loginUser){
-        // 实现登录功能
-        return userService.login(loginUser);
+        String key = "login." + loginUser.getUsername();
+        if (null == RateLimiterConfig.rateLimiterMap.get(key)) {
+            RateLimiterConfig.rateLimiterMap.put(key, RateLimiter.create(1));
+        }
+        RateLimiter rateLimiter = RateLimiterConfig.rateLimiterMap.get(key);
+        if (rateLimiter.tryAcquire()) {
+            // 实现登录功能
+            return userService.login(loginUser);
+        }
+        return Result.buildResult(Constants.ResponseCode.FAIL, "超出流量限制");
     }
 
     /**

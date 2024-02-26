@@ -126,7 +126,7 @@ public class LaboratoryServiceImpl extends ServiceImpl<LaboratoryMapper, Laborat
             LambdaQueryWrapper<Department> departmentLambdaQueryWrapper = new LambdaQueryWrapper<>();
             departmentLambdaQueryWrapper.like(Department::getName, laboratory.getDepartmentName());
             List<Department> departmentList = departmentService.list(departmentLambdaQueryWrapper);
-            if (0 == departmentList.size()) {
+            if (departmentList.isEmpty()) {
                 // 字段不存在，直接返回
                 return Result.buildErrorResult(Constants.OperationMessage.SELECT_FAIL.getInfo());
             }

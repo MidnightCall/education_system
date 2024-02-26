@@ -3,6 +3,7 @@ package com.edu.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.edu.commons.Constants;
 import com.edu.commons.Result;
@@ -54,17 +55,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(!loginUser.getPassword().equals(user.getPassword())){
             return Result.buildResult(Constants.ResponseCode.USERNAME_OR_PASSWORD_ERROR, "密码错误！");
         }
+        String token = UUID.randomUUID().toString();
+        String userKey =  Constants.LOGIN_USER_KEY + loginUser.getUsername();
 
-        // 保存用户信息到redis
-        // 随机生成token，作为登录令牌
-        String token = UUID.randomUUID().toString(true);
-        // 将用户名存储在redis
-        stringRedisTemplate.opsForValue().set(Constants.LOGIN_USER_KEY + token, loginUser.getUsername());
-        // 设置token有效期
-        stringRedisTemplate.expire(Constants.LOGIN_USER_KEY + token, LOGIN_USER_TTL, TimeUnit.MINUTES);
+        if (StrUtil.isNotBlank(stringRedisTemplate.opsForValue().get(userKey))) {
+            return Result.buildResult(Constants.ResponseCode.USERNAME_OR_PASSWORD_ERROR, "用户已登陆！");
+        }
+        // 写redis
+        stringRedisTemplate.opsForValue().set(userKey, token, LOGIN_USER_TTL, TimeUnit.MINUTES);
+//        // 设置token有效期
+//        stringRedisTemplate.expire(Constants.LOGIN_USER_KEY + token, LOGIN_USER_TTL, TimeUnit.MINUTES);
 
         //return token
-        return Result.buildSuccessResult(token);
+        return Result.buildSuccessResult(loginUser.getUsername());
     }
 
     /**
@@ -108,13 +111,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Result logout(String token) {
         // 若本地不存在用户，则退出登录失败
         if(UserHolder.getUser() == null){
-            return Result.buildErrorResult("退出登录失败！");
+            return Result.buildResult(Constants.ResponseCode.OK, "本地不存在用户信息！");
         }
         // 从本地移除用户
         UserHolder.removeUser();
         // 从redis中删除登录token，根据删除结果返回
         Boolean isSuccess = stringRedisTemplate.delete(LOGIN_USER_KEY + token);
-        if(isSuccess){
+        if(Boolean.TRUE.equals(isSuccess)){
             return Result.buildResult(Constants.ResponseCode.OK, "退出登录成功！");
         }else {
             return Result.buildErrorResult("退出登录失败！");

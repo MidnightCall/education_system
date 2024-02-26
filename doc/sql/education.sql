@@ -14,6 +14,8 @@
  Date: 18/07/2023 12:40:19
 */
 
+use education;
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
